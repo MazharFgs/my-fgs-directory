@@ -18,8 +18,10 @@
   "license": "ISC",
   "dependencies": {
     "@staffbase/widget-sdk": "^3.8.0",
+    "multiselect-react-dropdown": "^2.0.25",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-select": "^5.8.0",
     "regenerator-runtime": "0.13.7"
   },
   "devDependencies": {

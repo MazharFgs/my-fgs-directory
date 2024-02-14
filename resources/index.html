@@ -1,41 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.png">
-    <title>fgsglobal/my-fgs-directory</title>
-    <!-- locally stored versions of Staffbase frontend assets -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/libs.css" rel="stylesheet">
-    <link href="/css/font.css" rel="stylesheet">
-    <style>
-      body {
-        padding: 50px;
-      }
-      .box {
-        border: 2px dashed gray;
-        padding: 40px;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
-      <div class="box">
-        <h3>Widget preview:</h3>
-        <br />
-        <br />
-        <section id="preview">
-            <my-fgs-directory message="world!"></my-fgs-directory>
-        </section>
-      </div>
-      <div class="box">
-      <h3>Configuration preview:</h3>
-        <section id="config"></section>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.png">
+  <title>fgsglobal/my-fgs-directory</title>
+  <!-- locally stored versions of Staffbase frontend assets -->
+  <link href="/css/app.css" rel="stylesheet">
+  <link href="/css/libs.css" rel="stylesheet">
+  <link href="/css/font.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 50px;
+    }
+
+    .box {
+      border: 2px dashed gray;
+      padding: 40px;
+    }
+
+    .edit-profile-single-select {
+      color: red;
+    }
+
+    .icon_cancel {
+      display: none;
+    }
+
+    .chip {
+      color: black !important;
+      background: white !important;
+      padding: 4px 2px !important;
+    }
+
+    .chip:not(:last-child):after {
+      content: ',';
+    }
+
+    .searchWrapper {
+      min-height: 20px !important;
+      padding: 10px;
+      margin-right: 5px;
+      /* overflow: auto; */
+      /* border: 0px !important;  */
+    }
+
+    .directory-cancel-button {
+      margin-left: 30px;
+      margin-top: 50px;
+      color: #8D8E9A;
+
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-family: "FK Grotesk";
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      /* 171.429% */
+      text-decoration-line: underline;
+      cursor: pointer;
+    }
+    .directory-border-color{
+      margin-top: 20px;
+      background: 'lime';
+          color: 'lime';
+          border-color: 'lime',
+    }
+
+   .multiselectContainer { 
+    background: red;
+  }
+  searchBox { 
+	border: none;
+	font-size: 10px;
+	min-height: 50px;
+  }
+  .People-Card-Name {
+    color: var(--Gray-1, #39383d);
+    font-feature-settings: 'clig' off, 'liga' off;
+  
+    /* People/Card Name */
+    font-family: 'Bw Beto';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 116.667% */
+  }
+  
+  .People-Card-Business-Name {
+    color: var(--Gray-2, #65696b);
+    font-feature-settings: 'clig' off, 'liga' off;
+  
+    /* People/Card Title */
+    font-family: 'FK Grotesk';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 18px; /* 150% */
+  }
+  
+  .People-Card-Designation {
+    color: #65696b;
+    font-size: 12px;
+    font-family: FK Grotesk;
+    font-weight: 300;
+    line-height: 18px;
+  }
+  
+  .People-Card-Email-Detail,
+  .People-Card-Email {
+    color: #65696b;
+    font-size: 12px;
+    font-family: FK Grotesk;
+    font-weight: 500;
+    line-height: 14px;
+  }
+  
+  .People-Card-Number-Detail,
+  .People-Card-Number {
+    color: #65696b;
+    font-size: 12px;
+    font-family: FK Grotesk;
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+    <div class="box">
+      <h3>Widget preview:</h3>
+      <br />
+      <br />
+      <section id="preview">
+        <my-fgs-directory message="world!"></my-fgs-directory>
+      </section>
     </div>
-  </body>
-  <script src="bootstrap.js"></script>
-  <script src="fgsglobal.my-fgs-directory.js"></script>
-  <script src="config.js"></script>
+    <div class="box">
+      <h3>Configuration preview:</h3>
+      <section id="config"></section>
+    </div>
+  </div>
+</body>
+<script src="bootstrap.js"></script>
+<script src="fgsglobal.my-fgs-directory.js"></script>
+<script src="config.js"></script>
+
 </html>

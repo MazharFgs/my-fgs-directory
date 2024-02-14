@@ -28,7 +28,7 @@ const config: webpack.Configuration = merge(common, {
       directory: path.join(__dirname, "resources"),
     },
     compress: true,
-    port: 9000,
+    port: 3005,
   },
   mode: "development",
   devtool: "inline-source-map",

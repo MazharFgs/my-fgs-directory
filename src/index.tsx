@@ -23,14 +23,14 @@ import pkg from '../package.json'
  * Define wich attributes are handled by the widget. This should be also reflected in configuration schema
  */
 const widgetAttributes: string[] = [
-  'message',
+  'widgetApi',
 ];
 
 /**
  * This factory creates the class which is registered with the tagname in the `custom element registry`
  * Gets the parental class and a set of helper utilities provided by the hosting application.
  */
-const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
+const factory: BlockFactory = (BaseBlockClass, widgetApi) => {
   /**
    *  <my-fgs-directory message="world!"></my-fgs-directory>
    */
@@ -43,12 +43,11 @@ const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
       const attrs = this.parseAttributes<MyFgsDirectoryProps>();
       return {
         ...attrs,
-        contentLanguage: this.contentLanguage,
       };
     }
 
     public renderBlock(container: HTMLElement): void {
-      ReactDOM.render(<MyFgsDirectory {...this.props} />, container);
+      ReactDOM.render(<MyFgsDirectory {...this.props}  widgetApi={widgetApi}  />, container);
     }
 
     /**
