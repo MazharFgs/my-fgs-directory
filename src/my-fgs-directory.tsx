@@ -76,8 +76,8 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
   return <>
     <div className="directory-main-div">
       <div className="directory-filter-div" style={{ display: 'flex', flexWrap: 'wrap' }} >
-        <div className="edit-profile-element-div" style={{ width: "30%", float: "left" }}>
-          <label className="edit-profile-lable"
+        <div className="directory-element-div" style={{ width: "30%", float: "left" }}>
+          <label className="directory-lable"
             style={{
               height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
               fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
@@ -86,7 +86,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           </label>
 
           <Multiselect
-            className="edit-profile-single-select"
+            className="directory-single-select"
             options={list_position}
             isObject={false}
             showCheckbox={true}
@@ -98,8 +98,8 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           // singleSelect={true}
           />
         </div>
-        <div className="edit-profile-element-div" style={{ width: "70%", float: "left" }}>
-          <label className="edit-profile-lable"
+        <div className="directory-element-div" style={{ width: "70%", float: "left" }}>
+          <label className="directory-lable"
             style={{
               height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
               fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
@@ -108,7 +108,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           </label>
 
           <Multiselect
-            className="edit-profile-single-select"
+            className="directory-single-select"
             options={list_practies}
             isObject={false}
             showCheckbox={true}
@@ -119,8 +119,8 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
             selectedValues={practice}
           />
         </div>
-        <div className="edit-profile-element-div" style={{ width: "40%", float: "left" }}>
-          <label className="edit-profile-lable"
+        <div className="directory-element-div" style={{ width: "40%", float: "left" }}>
+          <label className="directory-lable"
             style={{
               height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
               fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
@@ -129,7 +129,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           </label>
 
           <Multiselect
-            className="edit-profile-single-select"
+            className="directory-single-select"
             options={list_sectors}
             isObject={false}
             showCheckbox={true}
@@ -140,8 +140,8 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
             selectedValues={sector}
           />
         </div>
-        <div className="edit-profile-element-div" style={{ width: "40%", float: "left" }}>
-          <label className="edit-profile-lable"
+        <div className="directory-element-div" style={{ width: "40%", float: "left" }}>
+          <label className="directory-lable"
             style={{
               height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
               fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
@@ -150,7 +150,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           </label>
 
           <Multiselect
-            className="edit-profile-single-select"
+            className="directory-single-select"
             options={list_capabilities}
             isObject={false}
             showCheckbox={true}
@@ -161,7 +161,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
             selectedValues={capability}
           />
         </div>
-        <div className="edit-profile-element-div" style={{ width: "20%", float: "left" }}>
+        <div className="directory-element-div" style={{ width: "20%", float: "left" }}>
           <div className="directory-cancel-button" onClick={resetForm}>
             Reset
           </div>
