@@ -16,6 +16,7 @@ import { BlockAttributes, WidgetApi, SBUserProfile } from "widget-sdk";
 import Select from "react-select";
 import Multiselect from "multiselect-react-dropdown";
 import PeopleCard from "./PeopleCard";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 /**
  * React Component
@@ -31,6 +32,7 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
   const [practice, setPractice] = useState([])
   const [sector, setSector] = useState([])
   const [capability, setCapability] = useState([])
+  const [tabIndex, setTabIndex] = useState(0);
 
 
 
@@ -52,41 +54,29 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
     setSector([])
     setCapability([])
 
-
   }
 
-  // const components = {
-  //   MultiValueContainer: ({ selectProps, data }) => {
-  //     console.log("selectProps" , selectProps)
-  //     console.log("data" , data)
-
-  //     const values = selectProps.value;
-  //     console.log(values)
-  //     if (values) {
-  //       const v= values[values.length - 1].label === data.label
-  //         ? data.label
-  //         : data.label + ", ";
-  //         console.log(v)
-  //         return v
-  //     } else return "";
-  //   }
-  // };
 
 
   return <>
     <div className="directory-main-div">
+    <Tabs className="dir-tabs" selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+    <TabList className="dir-tablist">
+      <Tab className="dir-tab">People</Tab>
+      <Tab className="dir-tab">Business Directory</Tab>
+    </TabList>
+
+    <TabPanel>
+    <div className="directory-people-card-main-div">
       <div className="directory-filter-div" style={{ display: 'flex', flexWrap: 'wrap' }} >
+        
         <div className="directory-element-div" style={{ width: "30%", float: "left" }}>
-          <label className="directory-lable"
-            style={{
-              height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
-              fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
-            }}>
+          <label className="directory-lable">
             Position
           </label>
 
           <Multiselect
-            className="directory-single-select"
+            className="directory-multi-select"
             options={list_position}
             isObject={false}
             showCheckbox={true}
@@ -99,16 +89,12 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           />
         </div>
         <div className="directory-element-div" style={{ width: "70%", float: "left" }}>
-          <label className="directory-lable"
-            style={{
-              height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
-              fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
-            }}>
+          <label className="directory-lable">
             Practice
           </label>
 
           <Multiselect
-            className="directory-single-select"
+            className="directory-multi-select"
             options={list_practies}
             isObject={false}
             showCheckbox={true}
@@ -120,16 +106,12 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           />
         </div>
         <div className="directory-element-div" style={{ width: "40%", float: "left" }}>
-          <label className="directory-lable"
-            style={{
-              height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
-              fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
-            }}>
+          <label className="directory-lable">
             Sector
           </label>
 
           <Multiselect
-            className="directory-single-select"
+            className="directory-multi-select"
             options={list_sectors}
             isObject={false}
             showCheckbox={true}
@@ -141,16 +123,12 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
           />
         </div>
         <div className="directory-element-div" style={{ width: "40%", float: "left" }}>
-          <label className="directory-lable"
-            style={{
-              height: '24px', alignSelf: "stretch", color: "var(--Gray-2, #65696B)",
-              fontFamily: "FK Grotesk", fontSize: "14px", fontStyle: "normal", fontWeight: "300", lineHeight: "32px"
-            }}>
+          <label className="directory-lable">
             Capability
           </label>
 
           <Multiselect
-            className="directory-single-select"
+            className="directory-multi-select"
             options={list_capabilities}
             isObject={false}
             showCheckbox={true}
@@ -189,6 +167,62 @@ export const MyFgsDirectory = ({ widgetApi }: MyFgsDirectoryProps): ReactElement
 
       <PeopleCard person={user}/>
       </div>
+      </div>
+    </TabPanel>
+    <TabPanel>
+    <div className="directory-people-card-main-div">
+      <div className="directory-filter-div" style={{ display: 'flex', flexWrap: 'wrap' }} >
+        
+       
+        <div className="directory-element-div" style={{ width: "80%", float: "left" }}>
+          <label className="directory-lable">
+            Category
+          </label>
+
+          <Multiselect
+            className="directory-multi-select"
+            options={list_capabilities}
+            isObject={false}
+            showCheckbox={true}
+            hidePlaceholder={true}
+            closeOnSelect={true}
+            onSelect={(e) => setCapability(e)}
+            onRemove={(e) => setCapability(e)}
+            selectedValues={capability}
+          />
+        </div>
+        <div className="directory-element-div" style={{ width: "20%", float: "left" }}>
+          <div className="directory-cancel-button" onClick={resetForm}>
+            Reset
+          </div>
+        </div>
+        
+      </div>
+      <hr className="directory-border-color"/>
+      <div className="directory-filter-div" style={{ display: 'flex', flexWrap: 'wrap' }} >
+      <PeopleCard person={user}/>
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+
+      <PeopleCard person={user}/>
+      </div>
+      </div>
+    </TabPanel>
+  </Tabs>
+  
 
       </div>
 
