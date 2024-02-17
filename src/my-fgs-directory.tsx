@@ -27,7 +27,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
   widgetApi: WidgetApi;
 }
 
-const user_base_url = "http://localhost:5000/api";
+const apiUrl = "http://127.0.0.1:5000/api/";
 
 export const MyFgsDirectory = ({
   widgetApi,
@@ -45,20 +45,22 @@ export const MyFgsDirectory = ({
   const [peopleData, setPeopleData] = useState([]);
 
   const [listSelectedValues, setLSV] = useState([]);
+  const [listPositions, setListPosition] = useState([]);
+  const [listPositionsSelectedVal, setListPositionsSelectedVal] = useState([]);
 
   console.log({ listSelectedValues });
 
-  const list_position = [
-    "Position A",
-    "Position B",
-    "Position C",
-    "Position D",
-    "Position E",
-  ];
-  const LIST_OPTIONS_OBJ: any = list_position.map((e) => ({
-    label: e,
-    value: e,
-  }));
+  //   const list_position = [
+  //     "Position A",
+  //     "Position B",
+  //     "Position C",
+  //     "Position D",
+  //     "Position E",
+  //   ];
+  //   const LIST_OPTIONS_OBJ: any = list_position.map((e) => ({
+  //     label: e,
+  //     value: e,
+  //   }));
   const list_practies = ["Practice A", "Practice B", "Practice C"];
   const list_sectors = ["Sector A", "Sector B", "Sector C"];
   const list_capabilities = ["Capability A", "Capability B", "Capability C"];
@@ -74,8 +76,40 @@ export const MyFgsDirectory = ({
     if (isLoggedIn) {
       console.log("User logged in succcessfully");
       fetchPeopleDirectoryUsers();
+      fetchPeopleCategory();
     }
   }, [isLoggedIn]);
+
+  const fetchPeopleCategory = () => {
+    const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
+
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${apiUrl}profiles/attributes`,
+      headers: {
+        Authorization: checkDirectoryAuthToken.replace(/^"(.*)"$/, "$1"),
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        let titles_list = response.data.data.titles;
+        // let out = JSON.stringify(response.data.title);
+        console.log("response.data.title", response.data.data.titles);
+
+        const titles_list_obj: any = titles_list.map((e) => ({
+          label: e,
+          value: e,
+        }));
+
+        setListPosition(titles_list_obj);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const fetchPeopleDirectoryUsers = () => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
@@ -107,7 +141,7 @@ export const MyFgsDirectory = ({
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
       let verifyToken = JSON.stringify({
-        userId: "00uwegl8rron6cj8z1t7",
+        userId: "00uwskbw25UJUbQfl1t7",
         token: checkDirectoryAuthToken.replace(/^"(.*)"$/, "$1"),
       });
 
@@ -138,8 +172,8 @@ export const MyFgsDirectory = ({
 
   const authenticateUser = (info) => {
     let data = JSON.stringify({
-      userId: "00uwegl8rron6cj8z1t7",
-      userName: "shantanu.singh_extern[at]fgsglobal.com",
+      userId: "00uwskbw25UJUbQfl1t7",
+      userName: "mazharali.shaikhaliyarvarjang_extern[at]fgsglobal.com",
     });
 
     let config = {
@@ -174,6 +208,7 @@ export const MyFgsDirectory = ({
     setPractice([]);
     setSector([]);
     setCapability([]);
+    setLSV([]);
   };
 
   const mappedData = () => {};
@@ -207,7 +242,7 @@ export const MyFgsDirectory = ({
                     <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
-                      options={LIST_OPTIONS_OBJ}
+                      options={listPositions}
                       showCheckbox={true}
                       hidePlaceholder={true}
                       closeOnSelect={true}
@@ -216,9 +251,9 @@ export const MyFgsDirectory = ({
                       // selectedValues={position}
                       // singleSelect={true}
                     />
-                    <Multiselect
+                    {/* <Multiselect
                       className="directory-multi-select"
-                      options={list_position}
+                      options={listPositions}
                       isObject={false}
                       showCheckbox={true}
                       hidePlaceholder={true}
@@ -227,7 +262,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e) => setPosition(e)}
                       selectedValues={position}
                       // singleSelect={true}
-                    />
+                    /> */}
                   </div>
                   <div
                     className="directory-element-div"
