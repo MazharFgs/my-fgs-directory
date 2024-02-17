@@ -1,5 +1,6 @@
 import React from 'react';
-const PeopleCard = ({ person }) => {
+const PeopleDirectoryCard = ({ person }) => {
+    
   console.log("person" , person)
   return (
     <div className="People-Card-Group-Container">
@@ -11,7 +12,7 @@ const PeopleCard = ({ person }) => {
           <div className="People-Card-Contents" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '10px', display: 'flex'}}>
             <div className="People-Card-NameDesignation" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '2px', display: 'flex'}}>
               <div className="People-Card-Name" style={{width: '166px', wordWrap: 'break-word'}}>{person?.firstName} {person?.lastName}</div>
-              <div className="People-Card-Business-Name" style={{width: '166px', wordWrap: 'break-word'}}>business Title</div>
+              <div className="People-Card-Business-Name" style={{width: '166px', wordWrap: 'break-word'}}>{(Object.keys(person.hr_title).length === 0)?'No department': person?.hr_title} </div>
               <div className="People-Card-Business-Name" style={{width: '166px', wordWrap: 'break-word'}}>Acme Department</div>
             </div>
             <div className="People-Card-ContactDetails" style={{width: '166px', height: '50px', position: 'relative'}}>
@@ -26,4 +27,4 @@ const PeopleCard = ({ person }) => {
   );
 };
 
-export default PeopleCard;
+export default PeopleDirectoryCard;

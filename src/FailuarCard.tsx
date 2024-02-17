@@ -1,8 +1,7 @@
 import React from 'react';
-const PeopleCard = ({ person }) => {
-  console.log("person" , person)
+const FailuarCard = () => {
   return (
-    <div className="People-Card-Group-Container">
+    <div className="directory-failuar-card">
       <div className="People-Card" style={{width: '198px', padding: '16px', background: 'white', borderRadius: '8px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px', display: 'inline-flex'}}>
         <div className="People-Card-Container" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '12px', display: 'flex'}}>
           <div className="People-Card-Imgplaceholder">
@@ -10,7 +9,7 @@ const PeopleCard = ({ person }) => {
           </div>
           <div className="People-Card-Contents" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '10px', display: 'flex'}}>
             <div className="People-Card-NameDesignation" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '2px', display: 'flex'}}>
-              <div className="People-Card-Name" style={{width: '166px', wordWrap: 'break-word'}}>{person?.firstName} {person?.lastName}</div>
+              <div className="People-Card-Name" style={{width: '166px', wordWrap: 'break-word'}}></div>
               <div className="People-Card-Business-Name" style={{width: '166px', wordWrap: 'break-word'}}>business Title</div>
               <div className="People-Card-Business-Name" style={{width: '166px', wordWrap: 'break-word'}}>Acme Department</div>
             </div>
@@ -26,4 +25,4 @@ const PeopleCard = ({ person }) => {
   );
 };
 
-export default PeopleCard;
+export default FailuarCard;
