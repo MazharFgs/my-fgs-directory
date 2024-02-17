@@ -20,6 +20,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import PeopleDirectoryCard from "./PeopleDirectoryCard";
 import MultiselectWithAll from "./form-controls/MultiselectWithAll";
+import SelectWithSearch from "./form-controls/SelectWithSearch";
 /**
  * React Component
  */
@@ -33,37 +34,1680 @@ export const MyFgsDirectory = ({
   widgetApi,
 }: MyFgsDirectoryProps): ReactElement | null => {
   const [user, setUser] = useState<SBUserProfile | null>(null);
-  const [position, setPosition] = useState([]);
-  const [practice, setPractice] = useState([]);
-  const [sector, setSector] = useState([]);
-  const [capability, setCapability] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [peopleOffset, setSetPeopleOffset] = useState(1);
-  const [peopleLimit, setPeopleLimit] = useState(10);
-  const [peopleData, setPeopleData] = useState([]);
+  const [peopleData, setPeopleData] = useState([
+    {
+      storyblokData: {},
+      firstName: "Staffbase",
+      lastName: "Support",
+      email: [
+        {
+          value: "andres.beltre+fgs@staffbase.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Fareed",
+      lastName: "Ahmed",
+      email: [
+        {
+          value: "fareed.ahmed@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          region: "NY",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(212) 687 8080",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "IT, Senior Systems & Cloud Architect",
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "frank.catapano@fgsglobal.com",
+        title: "Director of IT Security & Infrastructure",
+        name: "Frank Catapano",
+        image: {
+          id: "5005102",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/c60caeeb66/frank-catapano.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Frank",
+      lastName: "Catapano",
+      email: [
+        {
+          value: "frank.catapano@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Satyanarayana",
+      lastName: "Pulipaka",
+      email: [
+        {
+          value: "satyanarayana.pulipaka@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Satyanarayana",
+      lastName: "Pulipaka",
+      email: [
+        {
+          value: "satyanarayana.pulipaka_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Vinoth",
+      lastName: "Kannan",
+      email: [
+        {
+          value: "vinoth.kannan_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rahul",
+      lastName: "Ray",
+      email: [
+        {
+          value: "rahul.ray_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "rebecca.gasser@fgsglobal.com",
+        title: "Global Chief Information Officer",
+        name: "Rebecca Gasser",
+        image: {
+          id: 10890923,
+          alt: "",
+          name: "",
+          focus: "",
+          title: "",
+          source: "",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/e04bd35a22/rebecca-gasser-1.jpg",
+          copyright: "",
+          fieldtype: "asset",
+          meta_data: {},
+          is_external_url: false,
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Rebecca",
+      lastName: "Gasser",
+      email: [
+        {
+          value: "rebecca.gasser@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: "Global CIO",
+      department: "Corporate",
+    },
+    {
+      storyblokData: {},
+      firstName: "Jenny",
+      lastName: "Bloom",
+      email: [
+        {
+          value: "jenny.bloom@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington",
+          region: "DC",
+          postalCode: "20004",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: "Digital Project Manager",
+      department: "Digital Communications",
+    },
+    {
+      storyblokData: {
+        email: "dan.stone@fgsglobal.com",
+        cellphone: "",
+        title: "Partner, Head of Digital Development",
+        name: "Dan Stone",
+        image: {
+          id: "5004599",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/587dce10d3/dan-stone.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [
+          "fed3db29-2407-4a5e-952a-57ad65f42a27",
+          "7aef3ffa-e827-4127-bfa4-1f594b4b003b",
+          "9be07806-b139-4587-b5b6-ed959297c5f8",
+        ],
+        practice_areas: [
+          "fed3db29-2407-4a5e-952a-57ad65f42a27",
+          "7aef3ffa-e827-4127-bfa4-1f594b4b003b",
+          "9be07806-b139-4587-b5b6-ed959297c5f8",
+        ],
+      },
+      firstName: "Dan",
+      lastName: "Stone",
+      email: [
+        {
+          value: "dan.stone@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5471",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Partner, Head Of Digital Development",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "S",
+      lastName: "Sing",
+      email: [
+        {
+          value: "shantanu.singh_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rahul",
+      lastName: "Ramawath",
+      email: [
+        {
+          value: "rahul.ramawath_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: [
+        {
+          value: "6392993818",
+          type: "mobile",
+        },
+      ],
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "willie.roberson@fgsglobal.com",
+        title: "director",
+        name: "Willie Roberson",
+        image: {
+          id: "5017678",
+          alt: "",
+          name: "",
+          focus: null,
+          title: "",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/e516e780e6/willie-robinson.jpg",
+          copyright: "",
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Willie",
+      lastName: "Roberson",
+      email: [
+        {
+          value: "willie.roberson@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington DC",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 481-8701",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "John",
+      lastName: "Doe",
+      email: [
+        {
+          value: "shantanu.singh10@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Arnipalli",
+      lastName: "Bharati",
+      email: [
+        {
+          value: "arnipalli.bharati_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Prince",
+      lastName: "Jaiswal",
+      email: [
+        {
+          value: "prince.jaiswal_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Mazhar",
+      lastName: "Shaikh",
+      email: [
+        {
+          value: "mazharali.shaikhaliyarvarjang_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "alvaro.giorgetta@fgsglobal.com",
+        title: "Managing Director, UX & Digital Design",
+        name: "Alvaro Giorgetta",
+        image: {
+          id: "5005271",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/24ee5e4046/alvaro-giorgetta.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Alvaro",
+      lastName: "Giorgetta",
+      email: [
+        {
+          value: "alvaro.giorgetta@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington DC",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 741-5576",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Managing Director, UX & Digital Design",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Lindsay",
+      lastName: "Hutton",
+      email: [
+        {
+          value: "lindsay.hutton@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5469",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director, Digital Operations",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "John",
+      lastName: "Fink",
+      email: [
+        {
+          value: "john.fink@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 805-2061",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director of Design",
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "andre.malkine@fgsglobal.com",
+        title: "Managing Director, Digital Development",
+        name: "André Malkine",
+        image: {
+          id: "5028924",
+          alt: "Andre Malkine",
+          name: "",
+          focus: null,
+          title: "Andre Malkine, Director",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/1161fad21f/andre-malkine.jpg",
+          copyright: "",
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Andre",
+      lastName: "Malkine",
+      email: [
+        {
+          value: "andre.malkine@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5464",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director, Product Experience",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rabia",
+      lastName: "Kapoor",
+      email: [
+        {
+          value: "rabia.kapoor@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "erin.barth-dwyer@fgsglobal.com",
+        title: "senior associate",
+        name: "Erin Barth-Dwyer",
+        image: {
+          id: "5004595",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/c2db43dcab/erin-barth-dwyer.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Erin",
+      lastName: "Barth-Dwyer",
+      email: [
+        {
+          value: "erin.barth-dwyer@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 495-1902",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Senior Associate",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Milo",
+      lastName: "Axelrod",
+      email: [
+        {
+          value: "milo.axelrod@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5463",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "UX/UI Designer",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Noelle",
+      lastName: "Morris",
+      email: [
+        {
+          value: "noelle.morris@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          region: "New York",
+          postalCode: "10022",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5468",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Associate Director, UX/UI Designer",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Corrine",
+      lastName: "Dunn",
+      email: [
+        {
+          value: "corrine.dunn@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New  York",
+          region: "New York",
+          postalCode: "10022",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 980-7680",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Senior Associate, Digital & Technology",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Angela",
+      lastName: "Zirkelbach",
+      email: [
+        {
+          value: "angela.zirkelbach@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5477",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Managing Director",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Robert",
+      lastName: "Collegio",
+      email: [
+        {
+          value: "robert.collegio@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(212) 687 8080",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "IT Operations Manager",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Chris",
+      lastName: "Levesque",
+      email: [
+        {
+          value: "christine.levesque@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Sarath",
+      lastName: "Kumar",
+      email: [
+        {
+          value: "sarath.kumar19@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Kavitha",
+      lastName: "Kumarasamy",
+      email: [
+        {
+          value: "kavitha.49@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Adam",
+      lastName: "Keys",
+      email: [
+        {
+          value: "adam.keys@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+  ]);
+  const [searchPeopleData, setSearchPeopleData] = useState([
+    {
+      storyblokData: {},
+      firstName: "Staffbase",
+      lastName: "Support",
+      email: [
+        {
+          value: "andres.beltre+fgs@staffbase.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Fareed",
+      lastName: "Ahmed",
+      email: [
+        {
+          value: "fareed.ahmed@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          region: "NY",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(212) 687 8080",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "IT, Senior Systems & Cloud Architect",
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "frank.catapano@fgsglobal.com",
+        title: "Director of IT Security & Infrastructure",
+        name: "Frank Catapano",
+        image: {
+          id: "5005102",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/c60caeeb66/frank-catapano.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Frank",
+      lastName: "Catapano",
+      email: [
+        {
+          value: "frank.catapano@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Satyanarayana",
+      lastName: "Pulipaka",
+      email: [
+        {
+          value: "satyanarayana.pulipaka@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Satyanarayana",
+      lastName: "Pulipaka",
+      email: [
+        {
+          value: "satyanarayana.pulipaka_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Vinoth",
+      lastName: "Kannan",
+      email: [
+        {
+          value: "vinoth.kannan_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rahul",
+      lastName: "Ray",
+      email: [
+        {
+          value: "rahul.ray_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "rebecca.gasser@fgsglobal.com",
+        title: "Global Chief Information Officer",
+        name: "Rebecca Gasser",
+        image: {
+          id: 10890923,
+          alt: "",
+          name: "",
+          focus: "",
+          title: "",
+          source: "",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/e04bd35a22/rebecca-gasser-1.jpg",
+          copyright: "",
+          fieldtype: "asset",
+          meta_data: {},
+          is_external_url: false,
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Rebecca",
+      lastName: "Gasser",
+      email: [
+        {
+          value: "rebecca.gasser@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: "Global CIO",
+      department: "Corporate",
+    },
+    {
+      storyblokData: {},
+      firstName: "Jenny",
+      lastName: "Bloom",
+      email: [
+        {
+          value: "jenny.bloom@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington",
+          region: "DC",
+          postalCode: "20004",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: {},
+      hr_title: "Digital Project Manager",
+      department: "Digital Communications",
+    },
+    {
+      storyblokData: {
+        email: "dan.stone@fgsglobal.com",
+        cellphone: "",
+        title: "Partner, Head of Digital Development",
+        name: "Dan Stone",
+        image: {
+          id: "5004599",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/587dce10d3/dan-stone.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [
+          "fed3db29-2407-4a5e-952a-57ad65f42a27",
+          "7aef3ffa-e827-4127-bfa4-1f594b4b003b",
+          "9be07806-b139-4587-b5b6-ed959297c5f8",
+        ],
+        practice_areas: [
+          "fed3db29-2407-4a5e-952a-57ad65f42a27",
+          "7aef3ffa-e827-4127-bfa4-1f594b4b003b",
+          "9be07806-b139-4587-b5b6-ed959297c5f8",
+        ],
+      },
+      firstName: "Dan",
+      lastName: "Stone",
+      email: [
+        {
+          value: "dan.stone@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5471",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Partner, Head Of Digital Development",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "S",
+      lastName: "Sing",
+      email: [
+        {
+          value: "shantanu.singh_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rahul",
+      lastName: "Ramawath",
+      email: [
+        {
+          value: "rahul.ramawath_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: [
+        {
+          value: "6392993818",
+          type: "mobile",
+        },
+      ],
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "willie.roberson@fgsglobal.com",
+        title: "director",
+        name: "Willie Roberson",
+        image: {
+          id: "5017678",
+          alt: "",
+          name: "",
+          focus: null,
+          title: "",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/e516e780e6/willie-robinson.jpg",
+          copyright: "",
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Willie",
+      lastName: "Roberson",
+      email: [
+        {
+          value: "willie.roberson@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington DC",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 481-8701",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "John",
+      lastName: "Doe",
+      email: [
+        {
+          value: "shantanu.singh10@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Arnipalli",
+      lastName: "Bharati",
+      email: [
+        {
+          value: "arnipalli.bharati_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Prince",
+      lastName: "Jaiswal",
+      email: [
+        {
+          value: "prince.jaiswal_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Mazhar",
+      lastName: "Shaikh",
+      email: [
+        {
+          value: "mazharali.shaikhaliyarvarjang_extern@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "alvaro.giorgetta@fgsglobal.com",
+        title: "Managing Director, UX & Digital Design",
+        name: "Alvaro Giorgetta",
+        image: {
+          id: "5005271",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/24ee5e4046/alvaro-giorgetta.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Alvaro",
+      lastName: "Giorgetta",
+      email: [
+        {
+          value: "alvaro.giorgetta@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "Washington DC",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 741-5576",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Managing Director, UX & Digital Design",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Lindsay",
+      lastName: "Hutton",
+      email: [
+        {
+          value: "lindsay.hutton@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5469",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director, Digital Operations",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "John",
+      lastName: "Fink",
+      email: [
+        {
+          value: "john.fink@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 805-2061",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director of Design",
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "andre.malkine@fgsglobal.com",
+        title: "Managing Director, Digital Development",
+        name: "André Malkine",
+        image: {
+          id: "5028924",
+          alt: "Andre Malkine",
+          name: "",
+          focus: null,
+          title: "Andre Malkine, Director",
+          filename:
+            "https://a.storyblok.com/f/137553/1024x1400/1161fad21f/andre-malkine.jpg",
+          copyright: "",
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Andre",
+      lastName: "Malkine",
+      email: [
+        {
+          value: "andre.malkine@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5464",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Director, Product Experience",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Rabia",
+      lastName: "Kapoor",
+      email: [
+        {
+          value: "rabia.kapoor@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {
+        email: "erin.barth-dwyer@fgsglobal.com",
+        title: "senior associate",
+        name: "Erin Barth-Dwyer",
+        image: {
+          id: "5004595",
+          alt: null,
+          name: "",
+          focus: null,
+          title: null,
+          filename:
+            "https://s3.amazonaws.com/a.storyblok.com/f/137553/1024x1400/c2db43dcab/erin-barth-dwyer.jpg",
+          copyright: null,
+          fieldtype: "asset",
+        },
+        capabilities: [],
+        sectors: [],
+        practice_areas: [],
+      },
+      firstName: "Erin",
+      lastName: "Barth-Dwyer",
+      email: [
+        {
+          value: "erin.barth-dwyer@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 495-1902",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Senior Associate",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Milo",
+      lastName: "Axelrod",
+      email: [
+        {
+          value: "milo.axelrod@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5463",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "UX/UI Designer",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Noelle",
+      lastName: "Morris",
+      email: [
+        {
+          value: "noelle.morris@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          region: "New York",
+          postalCode: "10022",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5468",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Associate Director, UX/UI Designer",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Corrine",
+      lastName: "Dunn",
+      email: [
+        {
+          value: "corrine.dunn@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New  York",
+          region: "New York",
+          postalCode: "10022",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(202) 980-7680",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Senior Associate, Digital & Technology",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Angela",
+      lastName: "Zirkelbach",
+      email: [
+        {
+          value: "angela.zirkelbach@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(646) 616-5477",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "Managing Director",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Robert",
+      lastName: "Collegio",
+      email: [
+        {
+          value: "robert.collegio@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: [
+        {
+          locality: "New York",
+          country: "US",
+          primary: true,
+        },
+      ],
+      phone: [
+        {
+          value: "(212) 687 8080",
+          type: "work",
+          primary: true,
+        },
+      ],
+      hr_title: "IT Operations Manager",
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Chris",
+      lastName: "Levesque",
+      email: [
+        {
+          value: "christine.levesque@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Sarath",
+      lastName: "Kumar",
+      email: [
+        {
+          value: "sarath.kumar19@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Kavitha",
+      lastName: "Kumarasamy",
+      email: [
+        {
+          value: "kavitha.49@wipro.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+    {
+      storyblokData: {},
+      firstName: "Adam",
+      lastName: "Keys",
+      email: [
+        {
+          value: "adam.keys@fgsglobal.com",
+          primary: true,
+          providerID: "staffbase",
+        },
+      ],
+      office: {},
+      phone: {},
+      hr_title: {},
+      department: {},
+    },
+  ]);
 
-  const [listSelectedValues, setLSV] = useState([]);
+  //   const [listSelectedValues, setLSV] = useState([]);
   const [listPositions, setListPosition] = useState([]);
   const [listPositionsSelectedVal, setListPositionsSelectedVal] = useState([]);
 
-  console.log({ listSelectedValues });
+  const [listSector, setListSector] = useState([]);
+  const [selectedSector, setSelectedSector] = useState([]);
 
-  //   const list_position = [
-  //     "Position A",
-  //     "Position B",
-  //     "Position C",
-  //     "Position D",
-  //     "Position E",
-  //   ];
-  //   const LIST_OPTIONS_OBJ: any = list_position.map((e) => ({
-  //     label: e,
-  //     value: e,
-  //   }));
-  const list_practies = ["Practice A", "Practice B", "Practice C"];
-  const list_sectors = ["Sector A", "Sector B", "Sector C"];
-  const list_capabilities = ["Capability A", "Capability B", "Capability C"];
+  const [listPractice, setListPractice] = useState([]);
+  const [selectedPractice, setSelectedPractice] = useState([]);
+
+  const [listCapability, setListCapability] = useState([]);
+  const [selectedCapability, setSelectedCapability] = useState([]);
+
   useEffect(() => {
     widgetApi.getUserInformation().then((user) => {
       console.log("user", user);
@@ -75,10 +1719,120 @@ export const MyFgsDirectory = ({
   useEffect(() => {
     if (isLoggedIn) {
       console.log("User logged in succcessfully");
-      fetchPeopleDirectoryUsers();
+      //   fetchPeopleDirectoryUsers();
       fetchPeopleCategory();
     }
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    var resultOfPractice = [];
+    var resultOfPosition = [];
+    var resultOfSector = [];
+    var resultOfCapability = [];
+
+    if (
+      selectedPractice?.length > 0 ||
+      listPositionsSelectedVal?.length > 0 ||
+      selectedSector?.length > 0 ||
+      selectedCapability?.length
+    ) {
+      if (selectedCapability?.length > 0) {
+        console.log(selectedCapability);
+        const result = selectedCapability.map(
+          (value) => Object.values(value)[0]
+        );
+
+        let newArray = peopleData.filter((rec) => {
+          if (rec?.storyblokData) {
+            if (rec?.storyblokData?.capabilities?.length > 0) {
+              if (
+                rec?.storyblokData?.capabilities.filter((element) =>
+                  selectedCapability.includes(element)
+                )
+              ) {
+                resultOfCapability.push(rec);
+              }
+            }
+          }
+        });
+      }
+
+      if (selectedSector?.length > 0) {
+        console.log(selectedSector);
+        const result = selectedSector.map((value) => Object.values(value)[0]);
+
+        let newArray = peopleData.filter((rec) => {
+          if (rec?.storyblokData) {
+            if (rec?.storyblokData?.sectors?.length > 0) {
+              if (
+                rec?.storyblokData?.sectors.filter((element) =>
+                  selectedSector.includes(element)
+                )
+              ) {
+                resultOfSector.push(rec);
+              }
+            }
+          }
+        });
+        //   console.log("newArray", newArray);
+      }
+
+      if (selectedPractice?.length > 0) {
+        console.log(selectedPractice);
+        const result = selectedPractice.map((value) => Object.values(value)[0]);
+
+        let newArray = peopleData.filter((rec) => {
+          if (rec?.storyblokData) {
+            if (rec?.storyblokData?.practice_areas?.length > 0) {
+              if (
+                rec?.storyblokData?.practice_areas.filter((element) =>
+                  selectedPractice.includes(element)
+                )
+              ) {
+                resultOfPractice.push(rec);
+              }
+            }
+          }
+        });
+        //   console.log("newArray", newArray);
+      }
+
+      if (listPositionsSelectedVal?.length > 0) {
+        console.log(listPositionsSelectedVal);
+        const result = listPositionsSelectedVal.map(
+          (value) => Object.values(value)[0]
+        );
+
+        console.log("before", listPositionsSelectedVal);
+        let newArray = peopleData.filter((rec) => {
+          if (result.includes(rec?.hr_title)) {
+            return resultOfPosition.push(rec);
+          }
+        });
+
+        // setSearchPeopleData(newArray);
+      }
+
+      console.log("resultOfSector", resultOfSector);
+      console.log("selectedCapability", selectedCapability);
+
+      let peopleObj = [
+        ...resultOfPractice,
+        ...resultOfPosition,
+        ...resultOfSector,
+        ...selectedCapability,
+      ];
+
+      setSearchPeopleData([...new Set(peopleObj)]);
+    }
+
+    // setSearchPeopleData
+  }, [
+    listPositionsSelectedVal,
+    selectedPractice,
+    selectedCapability,
+    selectedSector,
+  ]);
 
   const fetchPeopleCategory = () => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
@@ -96,15 +1850,54 @@ export const MyFgsDirectory = ({
       .request(config)
       .then((response) => {
         let titles_list = response.data.data.titles;
-        // let out = JSON.stringify(response.data.title);
-        console.log("response.data.title", response.data.data.titles);
+        let practices = response.data.data.practise_areas;
+        let sectors = response.data.data.sectors;
+        let capability = response.data.data.capabilities;
 
+        // setPractice
+        // let out = JSON.stringify(response.data.title);
+        console.log("response.data.title", practices[0]);
         const titles_list_obj: any = titles_list.map((e) => ({
           label: e,
           value: e,
         }));
 
         setListPosition(titles_list_obj);
+
+        const sectors_list_obj: any = sectors.map((key, val) => ({
+          label: Object.keys(key)[0],
+          value: Object.values(key)[0],
+        }));
+
+        setListSector(sectors_list_obj);
+
+        const practice_list_obj: any = practices.map((key, val) => ({
+          label: Object.keys(key)[0],
+          value: Object.values(key)[0],
+        }));
+
+        setListPractice(practice_list_obj);
+
+        const capability_list_obj: any = capability.map((key, val) => ({
+          label: Object.keys(key)[0],
+          value: Object.values(key)[0],
+        }));
+
+        setListCapability(capability_list_obj);
+
+        // const sectors_list_obj: any = sectors.map((key, val) => ({
+        //   label: key,
+        //   value: val,
+        // }));
+
+        // console.log("sectors_list_obj sectors_list_obj", sectors_list_obj);
+
+        // setListSector(sectors_list_obj);
+
+        // const titles_list_obj: any = practices.map((e) => ({
+        //   label: e,
+        //   value: e,
+        // }));
       })
       .catch((error) => {
         console.log(error);
@@ -117,7 +1910,7 @@ export const MyFgsDirectory = ({
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/api/profiles?offset=${peopleOffset}`,
+      url: `http://127.0.0.1:5000/api/profiles`,
       headers: {
         Authorization: checkDirectoryAuthToken.replace(/^"(.*)"$/, "$1"),
         "Content-Type": "application/json",
@@ -128,7 +1921,8 @@ export const MyFgsDirectory = ({
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        setPeopleData(response.data.mergedData);
+        setPeopleData(response.data.data);
+        setSearchPeopleData(response.data.data);
         setLoader(false);
       })
       .catch((error) => {
@@ -201,17 +1995,15 @@ export const MyFgsDirectory = ({
       });
   };
 
-  console.log(position);
-
   const resetForm = () => {
-    setPosition([]);
-    setPractice([]);
-    setSector([]);
-    setCapability([]);
-    setLSV([]);
+    setSelectedPractice([]);
+    setSelectedSector([]);
+    setListPositionsSelectedVal([]);
+    setSelectedCapability([]);
+    setSearchPeopleData(peopleData);
   };
 
-  const mappedData = () => {};
+  //   const mappedData = () => {};
 
   return (
     <>
@@ -246,31 +2038,33 @@ export const MyFgsDirectory = ({
                       showCheckbox={true}
                       hidePlaceholder={true}
                       closeOnSelect={true}
-                      onSelect={(e: any) => setLSV(e)}
-                      onRemove={(e: any) => setLSV(e)}
-                      // selectedValues={position}
+                      onSelect={(e: any) => setListPositionsSelectedVal(e)}
+                      onRemove={(e: any) => setListPositionsSelectedVal(e)}
+                      selectedValues={listPositionsSelectedVal}
                       // singleSelect={true}
                     />
-                    {/* <Multiselect
-                      className="directory-multi-select"
-                      options={listPositions}
-                      isObject={false}
-                      showCheckbox={true}
-                      hidePlaceholder={true}
-                      closeOnSelect={true}
-                      onSelect={(e) => setPosition(e)}
-                      onRemove={(e) => setPosition(e)}
-                      selectedValues={position}
-                      // singleSelect={true}
-                    /> */}
                   </div>
+
                   <div
                     className="directory-element-div"
                     style={{ width: "70%", float: "left" }}
                   >
                     <label className="directory-lable">Practice</label>
 
-                    <Multiselect
+                    <MultiselectWithAll
+                      className="directory-multi-select"
+                      displayValue="label"
+                      options={listPractice}
+                      showCheckbox={true}
+                      hidePlaceholder={true}
+                      closeOnSelect={true}
+                      onSelect={(e: any) => setSelectedPractice(e)}
+                      onRemove={(e: any) => setSelectedPractice(e)}
+                      selectedValues={selectedPractice}
+                      // singleSelect={true}
+                    />
+
+                    {/* <Multiselect
                       className="directory-multi-select"
                       options={list_practies}
                       isObject={false}
@@ -280,7 +2074,7 @@ export const MyFgsDirectory = ({
                       onSelect={(e) => setPractice(e)}
                       onRemove={(e) => setPractice(e)}
                       selectedValues={practice}
-                    />
+                    /> */}
                   </div>
                   <div
                     className="directory-element-div"
@@ -288,16 +2082,17 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Sector</label>
 
-                    <Multiselect
+                    <MultiselectWithAll
                       className="directory-multi-select"
-                      options={list_sectors}
-                      isObject={false}
+                      displayValue="label"
+                      options={listSector}
                       showCheckbox={true}
                       hidePlaceholder={true}
                       closeOnSelect={true}
-                      onSelect={(e) => setSector(e)}
-                      onRemove={(e) => setSector(e)}
-                      selectedValues={sector}
+                      onSelect={(e: any) => setSelectedSector(e)}
+                      onRemove={(e: any) => setSelectedSector(e)}
+                      selectedValues={selectedSector}
+                      // singleSelect={true}
                     />
                   </div>
                   <div
@@ -306,16 +2101,17 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Capability</label>
 
-                    <Multiselect
+                    <MultiselectWithAll
                       className="directory-multi-select"
-                      options={list_capabilities}
-                      isObject={false}
+                      displayValue="label"
+                      options={listCapability}
                       showCheckbox={true}
                       hidePlaceholder={true}
                       closeOnSelect={true}
-                      onSelect={(e) => setCapability(e)}
-                      onRemove={(e) => setCapability(e)}
-                      selectedValues={capability}
+                      onSelect={(e: any) => setSelectedCapability(e)}
+                      onRemove={(e: any) => setSelectedCapability(e)}
+                      selectedValues={selectedCapability}
+                      // singleSelect={true}
                     />
                   </div>
                   <div
@@ -331,33 +2127,32 @@ export const MyFgsDirectory = ({
                   </div>
                 </div>
                 <hr className="directory-border-color" />
+                <div>
+                  <SelectWithSearch
+                    isObject={false}
+                    onKeyPressFn={function noRefCheck() {}}
+                    onRemove={function noRefCheck() {}}
+                    onSearch={function noRefCheck() {}}
+                    onSelect={function noRefCheck() {}}
+                    options={[
+                      "Sarath Kumar",
+                      "Narmadha",
+                      "Uthra",
+                      "Sathick basha",
+                      "Furkan",
+                    ]}
+                    placeholder="Find a person"
+                  />
+                </div>
+
                 <div
                   className="directory-filter-div"
                   style={{ display: "flex", flexWrap: "wrap" }}
                 >
-                  {peopleData &&
-                    peopleData.map((user) => {
+                  {searchPeopleData &&
+                    searchPeopleData.map((user) => {
                       return <PeopleDirectoryCard person={user} />;
                     })}
-
-                  {/* <PeopleCard person={user}/>
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/>
-
-        <PeopleCard person={user}/> */}
                 </div>
               </div>
             </TabPanel>
@@ -372,18 +2167,6 @@ export const MyFgsDirectory = ({
                     style={{ width: "80%", float: "left" }}
                   >
                     <label className="directory-lable">Category</label>
-
-                    <Multiselect
-                      className="directory-multi-select"
-                      options={list_capabilities}
-                      isObject={false}
-                      showCheckbox={true}
-                      hidePlaceholder={true}
-                      closeOnSelect={true}
-                      onSelect={(e) => setCapability(e)}
-                      onRemove={(e) => setCapability(e)}
-                      selectedValues={capability}
-                    />
                   </div>
                   <div
                     className="directory-element-div"

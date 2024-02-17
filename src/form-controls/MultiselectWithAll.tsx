@@ -13,8 +13,16 @@ function MultiselectWithAll({
 
   //   Update selected value from props if available
   useEffect(() => {
-    if (Array.isArray(selectedValuesProp) && selectedValuesProp.length) {
-      setSelectedValues(selectedValuesProp);
+    if (Array.isArray(selectedValuesProp)) {
+      if (options.length === selectedValuesProp.length) {
+        // Add all option if not available
+        setSelectedValues([
+          { label: "All", value: "*" },
+          ...selectedValuesProp,
+        ]);
+      } else {
+        setSelectedValues(selectedValuesProp);
+      }
     }
   }, [selectedValuesProp]);
 
@@ -37,7 +45,10 @@ function MultiselectWithAll({
     }
 
     if (onSelect) {
-      onSelect(selectedList, selectedItem);
+      onSelect(
+        selectedList.filter((sl) => sl.value !== "*"),
+        selectedItem
+      );
     }
   };
 
