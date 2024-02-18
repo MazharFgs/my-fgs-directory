@@ -39,6 +39,7 @@ export const MyFgsDirectory = ({
   const [loader, setLoader] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [peopleOffset, setSetPeopleOffset] = useState(1);
+
   const [peopleData, setPeopleData] = useState([]);
   const [searchPeopleData, setSearchPeopleData] = useState([]);
 
@@ -1698,8 +1699,17 @@ export const MyFgsDirectory = ({
   //       department: {},
   //     },
   //   ]);
+  //   const searchFromPeople = searchPeopleData.map((searchData) => {
+  //     return {
+  //       firstName: searchData.firstName,
+  //       lastName: searchData.lastName,
+  //       email: searchData.email[0].value,
+  //     };
+  //   });
 
-  //   const [listSelectedValues, setLSV] = useState([]);
+  //   console.log(searchFromPeople);
+
+  // const [listSelectedValues, setLSV] = useState([]);
 
   const [listPositions, setListPosition] = useState([]);
   const [listPositionsSelectedVal, setListPositionsSelectedVal] = useState([]);
