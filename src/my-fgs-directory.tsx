@@ -21,6 +21,7 @@ import axios from "axios";
 import PeopleDirectoryCard from "./PeopleDirectoryCard";
 import MultiselectWithAll from "./form-controls/MultiselectWithAll";
 import SelectWithSearch from "./form-controls/SelectWithSearch";
+import MultiSelectPosition from "./form-controls/MultiSelectPosition";
 /**
  * React Component
  */
@@ -38,7 +39,7 @@ export const MyFgsDirectory = ({
   const [tabIndex, setTabIndex] = useState(0);
   const [loader, setLoader] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [peopleOffset, setSetPeopleOffset] = useState(1);
+  //   const [peopleOffset, setSetPeopleOffset] = useState(1);
 
   const [peopleData, setPeopleData] = useState([]);
   const [searchPeopleData, setSearchPeopleData] = useState([]);
@@ -1699,17 +1700,14 @@ export const MyFgsDirectory = ({
   //       department: {},
   //     },
   //   ]);
-  //   const searchFromPeople = searchPeopleData.map((searchData) => {
-  //     return {
-  //       firstName: searchData.firstName,
-  //       lastName: searchData.lastName,
-  //       email: searchData.email[0].value,
-  //     };
-  //   });
+  const searchFromPeople = searchPeopleData.map((searchData) => {
+    return {
+      label: searchData.firstName,
+      value: searchData.email[0].value,
+    };
+  });
 
-  //   console.log(searchFromPeople);
-
-  // const [listSelectedValues, setLSV] = useState([]);
+  //   const [listSelectedValues, setLSV] = useState([]);
 
   const [listPositions, setListPosition] = useState([]);
   const [listPositionsSelectedVal, setListPositionsSelectedVal] = useState([]);
@@ -1749,13 +1747,13 @@ export const MyFgsDirectory = ({
       selectedPractice?.length > 0 ||
       listPositionsSelectedVal?.length > 0 ||
       selectedSector?.length > 0 ||
-      selectedCapability?.length
+      selectedCapability?.length > 0
     ) {
       if (selectedCapability?.length > 0) {
         console.log(selectedCapability);
-        const result = selectedCapability.map(
-          (value) => Object.values(value)[0]
-        );
+        // const result = selectedCapability.map(
+        //   (value) => Object.values(value)[0]
+        // );
 
         let newArray = peopleData.filter((rec) => {
           if (rec?.storyblokData) {
@@ -1828,14 +1826,14 @@ export const MyFgsDirectory = ({
         // setSearchPeopleData(newArray);
       }
 
-      console.log("resultOfSector", resultOfSector);
-      console.log("selectedCapability", selectedCapability);
+      //   console.log("resultOfSector", resultOfSector);
+      //   console.log("selectedCapability", selectedCapability);
 
       let peopleObj = [
         ...resultOfPractice,
         ...resultOfPosition,
         ...resultOfSector,
-        ...selectedCapability,
+        ...resultOfCapability,
       ];
 
       setSearchPeopleData([...new Set(peopleObj)]);
@@ -1849,6 +1847,7 @@ export const MyFgsDirectory = ({
     selectedSector,
   ]);
 
+  console.log("bbbb", selectedCapability);
   const fetchPeopleCategory = () => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
 
@@ -2018,6 +2017,10 @@ export const MyFgsDirectory = ({
     setSearchPeopleData(peopleData);
   };
 
+  const selectedSearchUser = (sdata) => {
+    console.log(sdata[0].value);
+    window.location.href = `${view_url}email=${sdata[0].value}`;
+  };
   //   const mappedData = () => {};
 
   return (
@@ -2045,6 +2048,8 @@ export const MyFgsDirectory = ({
                     style={{ width: "30%", float: "left" }}
                   >
                     <label className="directory-lable">Position</label>
+
+                    {/* <MultiSelectPosition options={listPositions} /> */}
 
                     <MultiselectWithAll
                       className="directory-multi-select"
@@ -2144,18 +2149,21 @@ export const MyFgsDirectory = ({
                 <hr className="directory-border-color" />
                 <div className="directory-select-seach">
                   <SelectWithSearch
-                    isObject={false}
+                    displayValue="label"
                     onKeyPressFn={function noRefCheck() {}}
                     onRemove={function noRefCheck() {}}
                     onSearch={function noRefCheck() {}}
-                    onSelect={function noRefCheck() {}}
-                    options={[
-                      "Sarath Kumar",
-                      "Narmadha",
-                      "Uthra",
-                      "Sathick basha",
-                      "Furkan",
-                    ]}
+                    onSelect={(e: any) => {
+                      selectedSearchUser(e);
+                    }}
+                    // options={[
+                    //   "Sarath Kumar",
+                    //   "Narmadha",
+                    //   "Uthra",
+                    //   "Sathick basha",
+                    //   "Furkan",
+                    // ]}
+                    options={searchFromPeople}
                     placeholder="Find a person"
                   />
                 </div>

@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 
-function SelectWithSearch({ selectedValues: selectedValuesProp, ...rest }) {
+function SelectWithSearch({
+  selectedValues: selectedValuesProp,
+  options,
+  onSelect = (selectedList: any[]) => {},
+  ...rest
+}) {
   // STATE DECLARATIONS
   const [selectedValues, setSelectedValues] = useState([]);
   const [textSearch, setTextSearch] = useState("");
@@ -14,10 +19,32 @@ function SelectWithSearch({ selectedValues: selectedValuesProp, ...rest }) {
   }, [selectedValuesProp]);
 
   const handleOnSearch = (value) => {
+    console.log("value handle", value);
+
     setTextSearch(value);
     if (rest.onSearch) {
       rest.onSearch(value);
     }
+  };
+
+  const handleOnSelect = (selectedList: any[], selectedItem: any[]) => {
+    onSelect(selectedList);
+    // if (selectedItem?.value === "*") {
+    //   setSelectedValues([...optionsWillAll]);
+    //   onSelect([...options], selectedItem);
+    //   return;
+    // } else if (selectedList.length === options.length) {
+    //   setSelectedValues([...optionsWillAll]);
+    //   onSelect([...options], selectedItem);
+    //   return;
+    // }
+
+    // if (onSelect) {
+    //   onSelect(
+    //     selectedList.filter((sl) => sl.value !== "*"),
+    //     selectedItem
+    //   );
+    // }
   };
 
   /**
@@ -45,15 +72,23 @@ function SelectWithSearch({ selectedValues: selectedValuesProp, ...rest }) {
     );
   };
 
+  const optionsWillAll = useMemo(() => {
+    if (!Array.isArray(options)) return [];
+    return [{ ...options }];
+  }, [options]);
+  console.log("optionsWillAll", optionsWillAll);
   return (
     <Multiselect
       {...rest}
+      options={options}
       selectedValues={selectedValues}
       customCloseIcon={<></>}
       selectionLimit={1}
       avoidHighlightFirstOption
       onSearch={handleOnSearch}
-      optionValueDecorator={handleValueDecorator}
+      //   onSelect={}
+      onSelect={handleOnSelect}
+      //   optionValueDecorator={handleValueDecorator}
       hidePlaceholder
       style={{
         chips: {
