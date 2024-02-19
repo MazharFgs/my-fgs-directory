@@ -30,7 +30,8 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
 }
 
 const apiUrl = "http://127.0.0.1:5000/api/";
-const view_url = "http://localhost:3006/?";
+const view_url =
+  "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925/?";
 
 export const MyFgsDirectory = ({
   widgetApi,
