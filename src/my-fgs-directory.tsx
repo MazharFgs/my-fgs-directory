@@ -22,6 +22,8 @@ import PeopleDirectoryCard from "./PeopleDirectoryCard";
 import MultiselectWithAll from "./form-controls/MultiselectWithAll";
 import SelectWithSearch from "./form-controls/SelectWithSearch";
 import MultiSelectPosition from "./form-controls/MultiSelectPosition";
+import MulSelect from "./form-controls/MulSelect";
+
 /**
  * React Component
  */
@@ -30,6 +32,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
 }
 
 const apiUrl = "http://127.0.0.1:5000/api/";
+// const view_url = "http://localhost:3006/";
 const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
 
@@ -40,7 +43,6 @@ export const MyFgsDirectory = ({
   const [tabIndex, setTabIndex] = useState(0);
   const [loader, setLoader] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [peopleOffset, setSetPeopleOffset] = useState(1);
 
   const [peopleData, setPeopleData] = useState([]);
   const [searchPeopleData, setSearchPeopleData] = useState([]);
@@ -1725,7 +1727,6 @@ export const MyFgsDirectory = ({
 
   useEffect(() => {
     widgetApi.getUserInformation().then((user) => {
-      console.log("user", user);
       setUser(user);
       verifyToken(user);
     });
@@ -1849,7 +1850,6 @@ export const MyFgsDirectory = ({
     selectedSector,
   ]);
 
-  console.log("bbbb", selectedCapability);
   const fetchPeopleCategory = () => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
 
@@ -1951,14 +1951,15 @@ export const MyFgsDirectory = ({
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
       let verifyToken = JSON.stringify({
-        userId: "00uwskbw25UJUbQfl1t7",
-        token: checkDirectoryAuthToken.replace(/^"(.*)"$/, "$1"),
+        userId: user?.externalID,
+        // userId: "00uwskbw25UJUbQfl1t7",
+        token: checkDirectoryAuthToken,
       });
 
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "http://127.0.0.1:5000/api/auth/verify",
+        url: `${apiUrl}auth/verify`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -1968,8 +1969,10 @@ export const MyFgsDirectory = ({
       axios
         .request(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
-          setIsLoggedIn(true);
+          if (response.data.success) {
+            console.log(JSON.stringify(response.data));
+            setIsLoggedIn(true);
+          }
         })
         .catch((error) => {
           authenticateUser(info);
@@ -1982,14 +1985,14 @@ export const MyFgsDirectory = ({
 
   const authenticateUser = (info) => {
     let data = JSON.stringify({
-      userId: "00uwskbw25UJUbQfl1t7",
-      userName: "mazharali.shaikhaliyarvarjang_extern[at]fgsglobal.com",
+      userId: user?.externalID,
+      //   userId: "00uwskbw25UJUbQfl1t7",
     });
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/api/auth/login",
+      url: `${apiUrl}auth/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -2000,10 +2003,9 @@ export const MyFgsDirectory = ({
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        localStorage.setItem(
-          "directoryAuthToken",
-          JSON.stringify(response.data.token)
-        );
+        localStorage.setItem("directoryAuthToken", response.data.token);
+
+        localStorage.setItem("loggedEmail", response.data.email);
         setIsLoggedIn(true);
       })
       .catch((error) => {
@@ -2051,7 +2053,14 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Position</label>
 
-                    <MultiSelectPosition options={listPositions} />
+                    {/* <MultiSelectPosition options={listPositions} /> */}
+
+                    <MulSelect
+                      optionsglobal={listPositions}
+                      onSelect={(e: any) => setListPositionsSelectedVal(e)}
+                      //   onRemove={(e: any) => setListPositionsSelectedVal(e)}
+                      //   selectedValues={listPositionsSelectedVal}
+                    />
 
                     {/* <MultiselectWithAll
                       className="directory-multi-select"
@@ -2080,7 +2089,7 @@ export const MyFgsDirectory = ({
                       showCheckbox={true}
                       hidePlaceholder={true}
                       closeOnSelect={true}
-                      onSelect={(e: any) => setSelectedPractice(e)}
+                      onSelect={(e: any) => console.log("on-select", e)}
                       onRemove={(e: any) => setSelectedPractice(e)}
                       selectedValues={selectedPractice}
                       // singleSelect={true}

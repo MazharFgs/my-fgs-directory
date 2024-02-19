@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 const PeopleDirectoryCard = ({ person, view_url }) => {
   //   console.log("person", person);
-
+  const onclick = (e) => {
+    e.preventDefault();
+    localStorage.setItem("view_profile_email", person?.email[0].value);
+    window.location = view_url;
+  };
   return (
-    <a
-      href={`${view_url}?email=${person?.email[0].value}`}
-      rel="noreferrer"
-      target="_blank"
-    >
+    <a onClick={onclick} href="#">
       <div className="People-Card-Group-Container">
         <div
           className="People-Card"
