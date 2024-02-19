@@ -1950,8 +1950,11 @@ export const MyFgsDirectory = ({
   const verifyToken = (info) => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
+      console.log("info before", info);
+      console.log("user", user);
+
       let verifyToken = JSON.stringify({
-        userId: user?.externalID,
+        userId: info?.externalID,
         // userId: "00uwskbw25UJUbQfl1t7",
         token: checkDirectoryAuthToken,
       });
@@ -1984,8 +1987,11 @@ export const MyFgsDirectory = ({
   };
 
   const authenticateUser = (info) => {
+    console.log("info before", info);
+    console.log("user", user);
+
     let data = JSON.stringify({
-      userId: user?.externalID,
+      userId: info?.externalID,
       //   userId: "00uwskbw25UJUbQfl1t7",
     });
 
