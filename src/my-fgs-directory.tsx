@@ -31,7 +31,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
 
 const apiUrl = "http://127.0.0.1:5000/api/";
 const view_url =
-  "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925?";
+  "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
 
 export const MyFgsDirectory = ({
   widgetApi,
@@ -40,7 +40,7 @@ export const MyFgsDirectory = ({
   const [tabIndex, setTabIndex] = useState(0);
   const [loader, setLoader] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //   const [peopleOffset, setSetPeopleOffset] = useState(1);
+  const [peopleOffset, setSetPeopleOffset] = useState(1);
 
   const [peopleData, setPeopleData] = useState([]);
   const [searchPeopleData, setSearchPeopleData] = useState([]);
@@ -1701,6 +1701,7 @@ export const MyFgsDirectory = ({
   //       department: {},
   //     },
   //   ]);
+
   const searchFromPeople = searchPeopleData.map((searchData) => {
     return {
       label: searchData.firstName,
@@ -2050,9 +2051,9 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Position</label>
 
-                    {/* <MultiSelectPosition options={listPositions} /> */}
+                    <MultiSelectPosition options={listPositions} />
 
-                    <MultiselectWithAll
+                    {/* <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
                       options={listPositions}
@@ -2063,7 +2064,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e: any) => setListPositionsSelectedVal(e)}
                       selectedValues={listPositionsSelectedVal}
                       // singleSelect={true}
-                    />
+                    /> */}
                   </div>
 
                   <div

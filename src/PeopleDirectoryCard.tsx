@@ -3,7 +3,11 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
   //   console.log("person", person);
 
   return (
-    <a href={`${view_url}email=${person?.email[0].value}`} target="_blank">
+    <a
+      href={`${view_url}?email=${person?.email[0].value}`}
+      rel="noreferrer"
+      target="_blank"
+    >
       <div className="People-Card-Group-Container">
         <div
           className="People-Card"

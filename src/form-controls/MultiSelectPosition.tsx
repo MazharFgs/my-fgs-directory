@@ -14,19 +14,6 @@ const options = [
     lable: "Oliver Hansen",
     value: "Oliver Hansen",
   },
-  //     {
-
-  //     }
-  //   "Oliver Hansen",
-  //   "Van Henry",
-  //   "April Tucker",
-  //   "Ralph Hubbard",
-  //   "Omar Alexander",
-  //   "Carlos Abbott",
-  //   "Miriam Wagner",
-  //   "Bradley Wilkerson",
-  //   "Virginia Andrews",
-  //   "Kelly Snyder",
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -103,6 +90,8 @@ const MultiSelectPosition = ({ options }) => {
       setSelected(selected.length === options.length ? [] : options);
       return;
     }
+
+    let selectedvalueobj = options.filter((e) => e.label === selected[0]);
     setSelected(value);
   };
 
