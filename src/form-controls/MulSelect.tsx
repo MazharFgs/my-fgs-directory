@@ -69,8 +69,8 @@ function MulSelect({
   }, [selected]);
 
   useEffect(() => {
-    setSelected(options);
-    onSelect(optionsglobal);
+    setSelected([]);
+    // onSelect(optionsglobal);
   }, []);
   useEffect(() => {
     if (onRemove) {
@@ -78,7 +78,7 @@ function MulSelect({
     }
   }, [onRemove]);
 
-  console.log("IsSelect", isAllSelected ? optionsglobal : selected);
+  //   console.log("IsSelect", isAllSelected ? optionsglobal : selected);
 
   const handleChange = (event: any) => {
     const value = event.target.value;
@@ -119,7 +119,7 @@ function MulSelect({
         value={selected}
         onChange={handleChange}
         renderValue={(selected: any) =>
-          isAllSelected ? `All ${type}` : selected.join(", ")
+          isAllSelected ? `All` : selected.join(", ")
         }
         MenuProps={MenuProps}
       >
