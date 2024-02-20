@@ -1882,6 +1882,7 @@ export const MyFgsDirectory = ({
         }));
 
         setListPosition(titles_list_obj);
+        setListPositionsSelectedVal(titles_list_obj);
 
         const sectors_list_obj: any = sectors.map((key, val) => ({
           label: Object.keys(key)[0],
@@ -2062,12 +2063,15 @@ export const MyFgsDirectory = ({
                     style={{ width: "30%", float: "left" }}
                   >
                     <label className="directory-lable">Position</label>
-
-                    <MulSelect
-                      optionsglobal={listPositions}
-                      onSelect={(e: any) => setListPositionsSelectedVal(e)}
-                      onRemove={onRemove}
-                    />
+                    <div className="mui-select-dropdown">
+                      <MulSelect
+                        optionsglobal={listPositions}
+                        onSelect={(e: any) => setListPositionsSelectedVal(e)}
+                        onRemove={onRemove}
+                        width={300}
+                        // defaultSelected={listPositions}
+                      />
+                    </div>
                   </div>
 
                   <div
@@ -2075,12 +2079,14 @@ export const MyFgsDirectory = ({
                     style={{ width: "70%", float: "left" }}
                   >
                     <label className="directory-lable">Practice</label>
-
-                    <MulSelect
-                      optionsglobal={listPractice}
-                      onSelect={(e: any) => setSelectedPractice(e)}
-                      onRemove={onRemove}
-                    />
+                    <div className="mui-select-dropdown">
+                      <MulSelect
+                        optionsglobal={listPractice}
+                        onSelect={(e: any) => setSelectedPractice(e)}
+                        onRemove={onRemove}
+                        width={800}
+                      />
+                    </div>
 
                     {/* <MultiselectWithAll
                       className="directory-multi-select"
@@ -2109,15 +2115,17 @@ export const MyFgsDirectory = ({
                   </div>
                   <div
                     className="directory-element-div"
-                    style={{ width: "40%", float: "left" }}
+                    style={{ width: "30%", float: "left" }}
                   >
                     <label className="directory-lable">Sector</label>
-
-                    <MulSelect
-                      optionsglobal={listSector}
-                      onSelect={(e: any) => setSelectedSector(e)}
-                      onRemove={onRemove}
-                    />
+                    <div className="mui-select-dropdown">
+                      <MulSelect
+                        optionsglobal={listSector}
+                        onSelect={(e: any) => setSelectedSector(e)}
+                        onRemove={onRemove}
+                        width={300}
+                      />
+                    </div>
 
                     {/* <MultiselectWithAll
                       className="directory-multi-select"
@@ -2134,14 +2142,17 @@ export const MyFgsDirectory = ({
                   </div>
                   <div
                     className="directory-element-div"
-                    style={{ width: "40%", float: "left" }}
+                    style={{ width: "60%", float: "left" }}
                   >
                     <label className="directory-lable">Capability</label>
-
-                    <MulSelect
-                      optionsglobal={listCapability}
-                      onSelect={(e: any) => setSelectedCapability(e)}
-                    />
+                    <div className="mui-select-dropdown">
+                      <MulSelect
+                        optionsglobal={listCapability}
+                        onSelect={(e: any) => setSelectedCapability(e)}
+                        onRemove={onRemove}
+                        width={600}
+                      />
+                    </div>
 
                     {/* <MultiselectWithAll
                       className="directory-multi-select"
@@ -2158,13 +2169,14 @@ export const MyFgsDirectory = ({
                   </div>
                   <div
                     className="directory-element-div"
-                    style={{ width: "20%", float: "left" }}
+                    style={{ width: "10%", float: "right" }}
                   >
                     <div
                       className="directory-cancel-button"
                       onClick={resetForm}
+                      style={{ marginTop: 50 }}
                     >
-                      Reset
+                      clear
                     </div>
                   </div>
                 </div>

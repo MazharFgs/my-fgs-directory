@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    width: 300,
+    // width: "300px",
   },
   indeterminateColor: {
     color: "#f50057",
@@ -50,6 +50,8 @@ function MulSelect({
   optionsglobal,
   onSelect = (selectedList: any[]) => {},
   onRemove,
+  width,
+  type = "",
 }) {
   const classes = useStyles();
   const [selected, setSelected] = useState<any>([]);
@@ -67,6 +69,10 @@ function MulSelect({
   }, [selected]);
 
   useEffect(() => {
+    setSelected(options);
+    onSelect(optionsglobal);
+  }, []);
+  useEffect(() => {
     if (onRemove) {
       setSelected([]);
     }
@@ -76,7 +82,6 @@ function MulSelect({
 
   const handleChange = (event: any) => {
     const value = event.target.value;
-    console.log("eventsss", value);
     // if (value.length === optArray.length + 1) {
     //   onSelect([]);
     //   //   setSelected([]);
@@ -107,13 +112,15 @@ function MulSelect({
   };
 
   return (
-    <FormControl className={classes.formControl}>
+    <FormControl className={classes.formControl} style={{ width: width }}>
       <Select
         labelId="mutiple-select-label"
         multiple
         value={selected}
         onChange={handleChange}
-        renderValue={(selected: any) => selected.join(", ")}
+        renderValue={(selected: any) =>
+          isAllSelected ? `All ${type}` : selected.join(", ")
+        }
         MenuProps={MenuProps}
       >
         <MenuItem
@@ -133,10 +140,10 @@ function MulSelect({
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.selectAllText }}
-            primary="Select All"
+            primary="All"
           />
         </MenuItem>
-        <br />
+        <br className="mui-br-for-adjust" style={{ display: "none" }} />
         {options.map((option: any) => (
           <MenuItem key={option} value={option}>
             <ListItemIcon>
