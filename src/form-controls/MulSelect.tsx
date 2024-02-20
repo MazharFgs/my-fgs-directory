@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputLabel from "@material-ui/core/InputLabel";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -46,7 +46,11 @@ const ListIconrops = {
   },
 };
 
-function MulSelect({ optionsglobal, onSelect = (selectedList: any[]) => {} }) {
+function MulSelect({
+  optionsglobal,
+  onSelect = (selectedList: any[]) => {},
+  onRemove,
+}) {
   const classes = useStyles();
   const [selected, setSelected] = useState<any>([]);
   const options = optionsglobal.map((e) => e.label);
@@ -55,6 +59,20 @@ function MulSelect({ optionsglobal, onSelect = (selectedList: any[]) => {} }) {
   });
   const isAllSelected =
     options?.length > 0 && selected?.length === options?.length;
+  const finalSelectedPosition = isAllSelected ? optionsglobal : selected;
+  useEffect(() => {
+    if (finalSelectedPosition.length === 0) {
+      onSelect([]);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (onRemove) {
+      setSelected([]);
+    }
+  }, [onRemove]);
+
+  console.log("IsSelect", isAllSelected ? optionsglobal : selected);
 
   const handleChange = (event: any) => {
     const value = event.target.value;
@@ -63,9 +81,9 @@ function MulSelect({ optionsglobal, onSelect = (selectedList: any[]) => {} }) {
     //   onSelect([]);
     //   //   setSelected([]);
     // }
-    if (!isAllSelected && value.length == 0) {
-      onSelect([]);
-    }
+    // if (!isAllSelected && value.length == 0) {
+    //   onSelect([]);
+    // }
     if (value[value.length - 1] === "all") {
       setSelected(selected.length === options.length ? [] : options);
       onSelect(optArray);
@@ -90,7 +108,6 @@ function MulSelect({ optionsglobal, onSelect = (selectedList: any[]) => {} }) {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
       <Select
         labelId="mutiple-select-label"
         multiple

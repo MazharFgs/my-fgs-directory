@@ -1724,6 +1724,7 @@ export const MyFgsDirectory = ({
 
   const [listCapability, setListCapability] = useState([]);
   const [selectedCapability, setSelectedCapability] = useState([]);
+  const [onRemove, setonRemove] = useState(false);
 
   useEffect(() => {
     widgetApi.getUserInformation().then((user) => {
@@ -1840,6 +1841,8 @@ export const MyFgsDirectory = ({
       ];
 
       setSearchPeopleData([...new Set(peopleObj)]);
+    } else {
+      setSearchPeopleData(peopleData);
     }
 
     // setSearchPeopleData
@@ -1950,12 +1953,9 @@ export const MyFgsDirectory = ({
   const verifyToken = (info) => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
-      console.log("info before", info);
-      console.log("user", user);
-
       let verifyToken = JSON.stringify({
-        userId: info?.externalID,
-        // userId: "00uwskbw25UJUbQfl1t7",
+        // userId: info?.externalID,
+        userId: "00uwskbw25UJUbQfl1t7",
         token: checkDirectoryAuthToken,
       });
 
@@ -1975,6 +1975,8 @@ export const MyFgsDirectory = ({
           if (response.data.success) {
             console.log(JSON.stringify(response.data));
             setIsLoggedIn(true);
+          } else {
+            authenticateUser(info);
           }
         })
         .catch((error) => {
@@ -1987,12 +1989,9 @@ export const MyFgsDirectory = ({
   };
 
   const authenticateUser = (info) => {
-    console.log("info before", info);
-    console.log("user", user);
-
     let data = JSON.stringify({
-      userId: info?.externalID,
-      //   userId: "00uwskbw25UJUbQfl1t7",
+      //   userId: info?.externalID,
+      userId: "00uwskbw25UJUbQfl1t7",
     });
 
     let config = {
@@ -2025,11 +2024,16 @@ export const MyFgsDirectory = ({
     setListPositionsSelectedVal([]);
     setSelectedCapability([]);
     setSearchPeopleData(peopleData);
+    setonRemove(true);
   };
 
   const selectedSearchUser = (sdata) => {
-    console.log(sdata[0].value);
-    window.location.href = `${view_url}email=${sdata[0].value}`;
+    //   e.preventDefault();
+    localStorage.setItem("view_profile_email", sdata[0].value);
+    window.location = view_url;
+
+    // console.log(sdata[0].value);
+    // window.location.href = `${view_url}email=${sdata[0].value}`;
   };
   //   const mappedData = () => {};
 
@@ -2059,27 +2063,11 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Position</label>
 
-                    {/* <MultiSelectPosition options={listPositions} /> */}
-
                     <MulSelect
                       optionsglobal={listPositions}
                       onSelect={(e: any) => setListPositionsSelectedVal(e)}
-                      //   onRemove={(e: any) => setListPositionsSelectedVal(e)}
-                      //   selectedValues={listPositionsSelectedVal}
+                      onRemove={onRemove}
                     />
-
-                    {/* <MultiselectWithAll
-                      className="directory-multi-select"
-                      displayValue="label"
-                      options={listPositions}
-                      showCheckbox={true}
-                      hidePlaceholder={true}
-                      closeOnSelect={true}
-                      onSelect={(e: any) => setListPositionsSelectedVal(e)}
-                      onRemove={(e: any) => setListPositionsSelectedVal(e)}
-                      selectedValues={listPositionsSelectedVal}
-                      // singleSelect={true}
-                    /> */}
                   </div>
 
                   <div
@@ -2088,7 +2076,13 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Practice</label>
 
-                    <MultiselectWithAll
+                    <MulSelect
+                      optionsglobal={listPractice}
+                      onSelect={(e: any) => setSelectedPractice(e)}
+                      onRemove={onRemove}
+                    />
+
+                    {/* <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
                       options={listPractice}
@@ -2099,7 +2093,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e: any) => setSelectedPractice(e)}
                       selectedValues={selectedPractice}
                       // singleSelect={true}
-                    />
+                    /> */}
 
                     {/* <Multiselect
                       className="directory-multi-select"
@@ -2119,7 +2113,13 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Sector</label>
 
-                    <MultiselectWithAll
+                    <MulSelect
+                      optionsglobal={listSector}
+                      onSelect={(e: any) => setSelectedSector(e)}
+                      onRemove={onRemove}
+                    />
+
+                    {/* <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
                       options={listSector}
@@ -2130,7 +2130,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e: any) => setSelectedSector(e)}
                       selectedValues={selectedSector}
                       // singleSelect={true}
-                    />
+                    /> */}
                   </div>
                   <div
                     className="directory-element-div"
@@ -2138,7 +2138,12 @@ export const MyFgsDirectory = ({
                   >
                     <label className="directory-lable">Capability</label>
 
-                    <MultiselectWithAll
+                    <MulSelect
+                      optionsglobal={listCapability}
+                      onSelect={(e: any) => setSelectedCapability(e)}
+                    />
+
+                    {/* <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
                       options={listCapability}
@@ -2149,7 +2154,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e: any) => setSelectedCapability(e)}
                       selectedValues={selectedCapability}
                       // singleSelect={true}
-                    />
+                    /> */}
                   </div>
                   <div
                     className="directory-element-div"
