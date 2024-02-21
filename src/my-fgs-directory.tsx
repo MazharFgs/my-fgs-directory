@@ -416,7 +416,7 @@ export const MyFgsDirectory = ({
                         optionsglobal={listPositions}
                         onSelect={(e: any) => setListPositionsSelectedVal(e)}
                         onRemove={onRemove}
-                        width={300}
+                        width={270}
                         // defaultSelected={listPositions}
                       />
                     </div>
@@ -432,7 +432,7 @@ export const MyFgsDirectory = ({
                         optionsglobal={listPractice}
                         onSelect={(e: any) => setSelectedPractice(e)}
                         onRemove={onRemove}
-                        width={700}
+                        width={650}
                       />
                     </div>
 
@@ -471,7 +471,7 @@ export const MyFgsDirectory = ({
                         optionsglobal={listSector}
                         onSelect={(e: any) => setSelectedSector(e)}
                         onRemove={onRemove}
-                        width={300}
+                        width={275}
                       />
                     </div>
 
@@ -498,7 +498,7 @@ export const MyFgsDirectory = ({
                         optionsglobal={listCapability}
                         onSelect={(e: any) => setSelectedCapability(e)}
                         onRemove={onRemove}
-                        width={600}
+                        width={575}
                       />
                     </div>
 
