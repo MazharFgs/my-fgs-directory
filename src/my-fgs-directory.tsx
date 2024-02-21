@@ -432,7 +432,7 @@ export const MyFgsDirectory = ({
                         optionsglobal={listPractice}
                         onSelect={(e: any) => setSelectedPractice(e)}
                         onRemove={onRemove}
-                        width={800}
+                        width={700}
                       />
                     </div>
 
