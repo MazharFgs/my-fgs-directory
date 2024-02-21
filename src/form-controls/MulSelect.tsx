@@ -53,6 +53,7 @@ function MulSelect({
   width,
   type = "",
 }) {
+  console.log("onRemove", onRemove);
   const classes = useStyles();
   const [selected, setSelected] = useState<any>([]);
   const options = optionsglobal.map((e) => e.label);
@@ -73,9 +74,9 @@ function MulSelect({
     // onSelect(optionsglobal);
   }, []);
   useEffect(() => {
-    if (onRemove) {
-      setSelected([]);
-    }
+    // if (onRemove) {
+    setSelected([]);
+    // }
   }, [onRemove]);
 
   //   console.log("IsSelect", isAllSelected ? optionsglobal : selected);
@@ -99,10 +100,10 @@ function MulSelect({
     const selectedValArray = value.map((m) => {
       //   console.log("optArray.length", optArray.length);
       for (let i = 0; i < optArray.length; i++) {
-        console.log("optArray.length", optArray[i].label);
+        // console.log("optArray.length", optArray[i].label);
 
         if (optArray[i].label === m) {
-          console.log("optArray[i]", optArray[i]);
+          //   console.log("optArray[i]", optArray[i]);
           return optArray[i];
         }
       }

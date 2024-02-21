@@ -71,7 +71,6 @@ export const MyFgsDirectory = ({
     widgetApi.getUserInformation().then((user) => {
       setUser(user);
       verifyToken(user);
-      resetForm();
     });
   }, []);
 
@@ -361,13 +360,14 @@ export const MyFgsDirectory = ({
       });
   };
 
-  const resetForm = () => {
+  const resetForm = (e) => {
+    console.log("eee", e);
     setSelectedPractice([]);
     setSelectedSector([]);
     setListPositionsSelectedVal([]);
     setSelectedCapability([]);
     setSearchPeopleData(peopleData);
-    setonRemove(true);
+    setonRemove(!onRemove);
   };
 
   const selectedSearchUser = (sdata) => {
@@ -379,7 +379,13 @@ export const MyFgsDirectory = ({
     // window.location.href = `${view_url}email=${sdata[0].value}`;
   };
   //   const mappedData = () => {};
-
+  function handleSelect(sdata) {
+    // console.log("ssss", sdata.value);
+    // return;
+    localStorage.setItem("view_profile_email", sdata.value);
+    window.location = view_url;
+    //   setSelectedOptions(data);
+  }
   return (
     <>
       <div className="directory-main-div">
@@ -515,7 +521,9 @@ export const MyFgsDirectory = ({
                   >
                     <div
                       className="directory-cancel-button"
-                      onClick={resetForm}
+                      onClick={(e) => {
+                        resetForm(e);
+                      }}
                       style={{ marginTop: 50 }}
                     >
                       clear
@@ -524,7 +532,15 @@ export const MyFgsDirectory = ({
                 </div>
                 <hr className="directory-border-color" />
                 <div className="directory-select-seach">
-                  <SelectWithSearch
+                  <Select
+                    options={searchFromPeople}
+                    placeholder="Find a person"
+                    value={""}
+                    onChange={handleSelect}
+                    isSearchable={true}
+                  />
+
+                  {/* <SelectWithSearch
                     displayValue="label"
                     onKeyPressFn={function noRefCheck() {}}
                     onRemove={function noRefCheck() {}}
@@ -541,7 +557,7 @@ export const MyFgsDirectory = ({
                     // ]}
                     options={searchFromPeople}
                     placeholder="Find a person"
-                  />
+                  /> */}
                 </div>
 
                 <div
@@ -576,12 +592,7 @@ export const MyFgsDirectory = ({
                     className="directory-element-div"
                     style={{ width: "20%", float: "left" }}
                   >
-                    <div
-                      className="directory-cancel-button"
-                      onClick={resetForm}
-                    >
-                      Reset
-                    </div>
+                    <div className="directory-cancel-button">Reset</div>
                   </div>
                 </div>
                 <hr className="directory-border-color" />
