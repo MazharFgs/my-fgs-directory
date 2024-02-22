@@ -78,7 +78,7 @@ export const MyFgsDirectory = ({
 
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("User logged in succcessfully");
+      //   console.log("User logged in succcessfully");
       fetchPeopleDirectoryUsers();
       fetchPeopleCategory();
     }
@@ -97,7 +97,7 @@ export const MyFgsDirectory = ({
       selectedCapability?.length > 0
     ) {
       if (selectedCapability?.length > 0) {
-        console.log(selectedCapability);
+        // console.log(selectedCapability);
         // const result = selectedCapability.map(
         //   (value) => Object.values(value)[0]
         // );
@@ -118,7 +118,7 @@ export const MyFgsDirectory = ({
       }
 
       if (selectedSector?.length > 0) {
-        console.log(selectedSector);
+        // console.log(selectedSector);
         const result = selectedSector.map((value) => Object.values(value)[0]);
 
         let newArray = peopleData.filter((rec) => {
@@ -137,7 +137,7 @@ export const MyFgsDirectory = ({
       }
 
       if (selectedPractice?.length > 0) {
-        console.log(selectedPractice);
+        // console.log(selectedPractice);
         const result = selectedPractice.map((value) => Object.values(value)[0]);
 
         let newArray = peopleData.filter((rec) => {
@@ -157,12 +157,12 @@ export const MyFgsDirectory = ({
       }
 
       if (listPositionsSelectedVal?.length > 0) {
-        console.log(listPositionsSelectedVal);
+        // console.log(listPositionsSelectedVal);
         const result = listPositionsSelectedVal.map(
           (value) => Object.values(value)[0]
         );
 
-        console.log("before", listPositionsSelectedVal);
+        // console.log("before", listPositionsSelectedVal);
         let newArray = peopleData.filter((rec) => {
           if (result.includes(rec?.hr_title)) {
             return resultOfPosition.push(rec);
@@ -214,7 +214,7 @@ export const MyFgsDirectory = ({
 
         // setPractice
         // let out = JSON.stringify(response.data.title);
-        console.log("response.data.title", practices[0]);
+        //  console.log("response.data.title", practices[0]);
         const titles_list_obj: any = titles_list.map((e) => ({
           label: e,
           value: e,
@@ -259,7 +259,7 @@ export const MyFgsDirectory = ({
         // }));
       })
       .catch((error) => {
-        console.log(error);
+        //  console.log(error);
       });
   };
 
@@ -279,13 +279,13 @@ export const MyFgsDirectory = ({
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         setPeopleData(response.data.data);
         setSearchPeopleData(response.data.data);
         setLoader(false);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setLoader(false);
       });
   };
@@ -312,16 +312,16 @@ export const MyFgsDirectory = ({
       axios
         .request(config)
         .then((response) => {
-          console.log("suu", response);
+          //   console.log("suu", response);
           if (response.data.success) {
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
             setIsLoggedIn(true);
           } else {
             authenticateUser(info);
           }
         })
         .catch((error) => {
-          console.log("catch", error);
+          //   console.log("catch", error);
           authenticateUser(info);
         });
     } else {
@@ -348,14 +348,14 @@ export const MyFgsDirectory = ({
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         localStorage.setItem("directoryAuthToken", response.data.token);
 
         localStorage.setItem("loggedEmail", response.data.email);
         setIsLoggedIn(true);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

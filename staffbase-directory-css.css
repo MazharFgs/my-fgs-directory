@@ -9,9 +9,50 @@
 
 .plugin-65ccc99094a9e16a1bbe1146,
 .plugin-65cf4d391b753109ec4709fb {
-  .css-1hb7zxy-IndicatorsContainer {
-    display: none !important;
+  br {
+    display: none;
   }
+  .People-Card-Name {
+    color: var(--Gray-1, #39383d);
+    font-feature-settings: "clig" off, "liga" off;
+    /* People/Card Name */
+    font-family: "Bw Beto";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 116.667% */
+  }
+  .People-Card-Business-Name {
+    color: var(--Gray-2, #65696b);
+    font-feature-settings: "clig" off, "liga" off;
+    /* People/Card Title */
+    font-family: "FK Grotesk";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 18px; /* 150% */
+  }
+  .People-Card-ContactDetails {
+    color: var(--Gray-2, #65696b);
+    font-feature-settings: "clig" off, "liga" off;
+    /* Practice Areas/Capabilities Card Titles */
+    font-family: "FK Grotesk";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px; /* 116.667% */
+  }
+  .People-Card-Email-Detail {
+    color: var(--Gray-2, #65696b);
+    font-feature-settings: "clig" off, "liga" off;
+    /* Practice Areas/Capabilities Card Titles */
+    font-family: "FK Grotesk";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px; /* 116.667% */
+  }
+
   .css-13cymwt-control {
     border: none !important;
   }
@@ -46,9 +87,8 @@
   .css-1wy0on6 {
     display: none !important;
   }
-
-  br {
-    display: none;
+  .directory-border-color {
+    margin-bottom: 10px;
   }
 
   ul.dir-tablist {
@@ -170,5 +210,3 @@
   }
 }
 /* DIRECTORY PAGE END */
-
-/* ============================================================= */
