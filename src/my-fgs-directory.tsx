@@ -14,15 +14,16 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { BlockAttributes, WidgetApi, SBUserProfile } from "widget-sdk";
 import Select from "react-select";
-import Multiselect from "multiselect-react-dropdown";
+// import Multiselect from "multiselect-react-dropdown";
 import PeopleCard from "./PeopleCard";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import PeopleDirectoryCard from "./PeopleDirectoryCard";
-import MultiselectWithAll from "./form-controls/MultiselectWithAll";
-import SelectWithSearch from "./form-controls/SelectWithSearch";
-import MultiSelectPosition from "./form-controls/MultiSelectPosition";
+// import MultiselectWithAll from "./form-controls/MultiselectWithAll";
+// import SelectWithSearch from "./form-controls/SelectWithSearch";
+// import MultiSelectPosition from "./form-controls/MultiSelectPosition";
 import MulSelect from "./form-controls/MulSelect";
+import HighlightSearch from "./form-controls/HighlightSearch";
 
 /**
  * React Component
@@ -31,7 +32,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
   widgetApi: WidgetApi;
 }
 
-const apiUrl = "http://127.0.0.1:5000/api/";
+const apiUrl = `https://myfgs-staffbase-storyblok-proxy-6nar3kdwr-fgh-global.vercel.app/api/`;
 // const view_url = "http://localhost:3006/";
 const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
@@ -50,7 +51,8 @@ export const MyFgsDirectory = ({
   const searchFromPeople = searchPeopleData.map((searchData) => {
     return {
       label: searchData.firstName,
-      value: searchData.email[0].value,
+      value: searchData.firstName,
+      email: searchData.email[0].value,
     };
   });
 
@@ -132,7 +134,6 @@ export const MyFgsDirectory = ({
             }
           }
         });
-        //   console.log("newArray", newArray);
       }
 
       if (selectedPractice?.length > 0) {
@@ -170,9 +171,6 @@ export const MyFgsDirectory = ({
 
         // setSearchPeopleData(newArray);
       }
-
-      //   console.log("resultOfSector", resultOfSector);
-      //   console.log("selectedCapability", selectedCapability);
 
       let peopleObj = [
         ...resultOfPractice,
@@ -271,7 +269,7 @@ export const MyFgsDirectory = ({
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/api/profiles`,
+      url: `${apiUrl}profiles/allProfiles`,
       headers: {
         Authorization: checkDirectoryAuthToken.replace(/^"(.*)"$/, "$1"),
         "Content-Type": "application/json",
@@ -314,6 +312,7 @@ export const MyFgsDirectory = ({
       axios
         .request(config)
         .then((response) => {
+          console.log("suu", response);
           if (response.data.success) {
             console.log(JSON.stringify(response.data));
             setIsLoggedIn(true);
@@ -322,8 +321,8 @@ export const MyFgsDirectory = ({
           }
         })
         .catch((error) => {
+          console.log("catch", error);
           authenticateUser(info);
-          console.log(error);
         });
     } else {
       authenticateUser(info);
@@ -361,7 +360,6 @@ export const MyFgsDirectory = ({
   };
 
   const resetForm = (e) => {
-    console.log("eee", e);
     setSelectedPractice([]);
     setSelectedSector([]);
     setListPositionsSelectedVal([]);
@@ -370,22 +368,22 @@ export const MyFgsDirectory = ({
     setonRemove(!onRemove);
   };
 
-  const selectedSearchUser = (sdata) => {
-    //   e.preventDefault();
-    localStorage.setItem("view_profile_email", sdata[0].value);
-    window.location = view_url;
+  //   const selectedSearchUser = (sdata) => {
+  //     //   e.preventDefault();
+  //     localStorage.setItem("view_profile_email", sdata[0].value);
+  //     window.location = view_url;
 
-    // console.log(sdata[0].value);
-    // window.location.href = `${view_url}email=${sdata[0].value}`;
-  };
+  //     // console.log(sdata[0].value);
+  //     // window.location.href = `${view_url}email=${sdata[0].value}`;
+  //   };
   //   const mappedData = () => {};
-  function handleSelect(sdata) {
-    // console.log("ssss", sdata.value);
-    // return;
-    localStorage.setItem("view_profile_email", sdata.value);
-    window.location = view_url;
-    //   setSelectedOptions(data);
-  }
+  //   function handleSelect(sdata) {
+  //     // console.log("ssss", sdata);
+  //     // return;
+  //     localStorage.setItem("view_profile_email", sdata.email);
+  //     window.location = view_url;
+  //     //   setSelectedOptions(data);
+  //   }
   return (
     <>
       <div className="directory-main-div">
@@ -501,19 +499,6 @@ export const MyFgsDirectory = ({
                         width={575}
                       />
                     </div>
-
-                    {/* <MultiselectWithAll
-                      className="directory-multi-select"
-                      displayValue="label"
-                      options={listCapability}
-                      showCheckbox={true}
-                      hidePlaceholder={true}
-                      closeOnSelect={true}
-                      onSelect={(e: any) => setSelectedCapability(e)}
-                      onRemove={(e: any) => setSelectedCapability(e)}
-                      selectedValues={selectedCapability}
-                      // singleSelect={true}
-                    /> */}
                   </div>
                   <div
                     className="directory-element-div"
@@ -532,32 +517,53 @@ export const MyFgsDirectory = ({
                 </div>
                 <hr className="directory-border-color" />
                 <div className="directory-select-seach">
-                  <Select
+                  {/* <Select
                     options={searchFromPeople}
                     placeholder="Find a person"
                     value={""}
                     onChange={handleSelect}
                     isSearchable={true}
-                  />
-
-                  {/* <SelectWithSearch
-                    displayValue="label"
-                    onKeyPressFn={function noRefCheck() {}}
-                    onRemove={function noRefCheck() {}}
-                    onSearch={function noRefCheck() {}}
-                    onSelect={(e: any) => {
-                      selectedSearchUser(e);
-                    }}
-                    // options={[
-                    //   "Sarath Kumar",
-                    //   "Narmadha",
-                    //   "Uthra",
-                    //   "Sathick basha",
-                    //   "Furkan",
-                    // ]}
-                    options={searchFromPeople}
-                    placeholder="Find a person"
+                    openMenuOnFocus={false}
+                    isMenuOpen={true}
                   /> */}
+                  <HighlightSearch
+                    options={searchFromPeople}
+                    // options={[
+                    //   {
+                    //     label: "Satyanarayana",
+                    //     value: "Satyanarayana",
+                    //     email: "satyanarayana.pulipaka@wipro.com",
+                    //   },
+                    //   {
+                    //     label: "Satyanarayana",
+                    //     value: "Satyanarayana",
+                    //     email: "satyanarayana.pulipaka_extern@fgsglobal.com",
+                    //   },
+                    //   {
+                    //     label: "S",
+                    //     value: "S",
+                    //     email: "shantanu.singh_extern@fgsglobal.com",
+                    //   },
+                    // ]}
+
+                    // options={[
+                    //   { value: "Spring", label: "Spring" },
+                    //   { value: "Summer", label: "Summer" },
+                    //   { value: "Autumn", label: "Autumn" },
+                    //   { value: "Winter", label: "Winter" },
+                    //   { value: "Rain", label: "Rain" },
+                    //   { value: "Fog", label: "Fog" },
+                    //   { value: "Thunderstrom", label: "Thunderstrom" },
+                    //   { value: "Flood", label: "Flood" },
+                    //   { value: "Blue", label: "Blue" },
+                    //   { value: "Green", label: "Green" },
+                    //   { value: "Orange", label: "Orange" },
+                    //   { value: "Watermelon", label: "Watermelon" },
+                    //   { value: "Banana", label: "Banana" },
+                    //   { value: "Apple", label: "Apple" },
+                    //   { value: "Mango", label: "Mango" },
+                    // ]}
+                  />
                 </div>
 
                 <div

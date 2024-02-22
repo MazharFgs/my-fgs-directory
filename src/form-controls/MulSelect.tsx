@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import InputLabel from "@material-ui/core/InputLabel";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,18 +31,16 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
       width: 250,
     },
+    position: "relative",
   },
-};
-
-const ListIconrops = {
-  PaperProps: {
-    style: {
-      maxWidth: 33,
-    },
+  anchorOrigin: {
+    vertical: "bottom",
+    horizontal: "left",
   },
+  getContentAnchorEl: null,
 };
 
 function MulSelect({
@@ -51,9 +48,7 @@ function MulSelect({
   onSelect = (selectedList: any[]) => {},
   onRemove,
   width,
-  type = "",
 }) {
-  console.log("onRemove", onRemove);
   const classes = useStyles();
   const [selected, setSelected] = useState<any>([]);
   const options = optionsglobal.map((e) => e.label);
@@ -63,6 +58,7 @@ function MulSelect({
   const isAllSelected =
     options?.length > 0 && selected?.length === options?.length;
   const finalSelectedPosition = isAllSelected ? optionsglobal : selected;
+
   useEffect(() => {
     if (finalSelectedPosition.length === 0) {
       onSelect([]);
@@ -71,25 +67,15 @@ function MulSelect({
 
   useEffect(() => {
     setSelected([]);
-    // onSelect(optionsglobal);
   }, []);
   useEffect(() => {
-    // if (onRemove) {
     setSelected([]);
-    // }
   }, [onRemove]);
 
   //   console.log("IsSelect", isAllSelected ? optionsglobal : selected);
 
   const handleChange = (event: any) => {
     const value = event.target.value;
-    // if (value.length === optArray.length + 1) {
-    //   onSelect([]);
-    //   //   setSelected([]);
-    // }
-    // if (!isAllSelected && value.length == 0) {
-    //   onSelect([]);
-    // }
     if (value[value.length - 1] === "all") {
       setSelected(selected.length === options.length ? [] : options);
       onSelect(optArray);
@@ -98,12 +84,8 @@ function MulSelect({
     setSelected(value);
 
     const selectedValArray = value.map((m) => {
-      //   console.log("optArray.length", optArray.length);
       for (let i = 0; i < optArray.length; i++) {
-        // console.log("optArray.length", optArray[i].label);
-
         if (optArray[i].label === m) {
-          //   console.log("optArray[i]", optArray[i]);
           return optArray[i];
         }
       }
@@ -134,6 +116,7 @@ function MulSelect({
             <Checkbox
               classes={{ indeterminate: classes.indeterminateColor }}
               checked={isAllSelected}
+              style={{ color: "var(--Green-3, #2d5453)" }}
               indeterminate={
                 selected?.length > 0 && selected?.length < options?.length
               }
@@ -148,7 +131,12 @@ function MulSelect({
         {options.map((option: any) => (
           <MenuItem key={option} value={option}>
             <ListItemIcon>
-              <Checkbox checked={selected?.indexOf(option) > -1} />
+              <Checkbox
+                style={{ color: "var(--Green-3, #2d5453)" }}
+                checked={selected?.indexOf(option) > -1}
+                // labelStyle={{ color: "white" }}
+                // iconStyle={{ fill: "white" }}
+              />
             </ListItemIcon>
             <ListItemText primary={option} />
           </MenuItem>
