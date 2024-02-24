@@ -1,5 +1,13 @@
 /* DIRECTORY PAGE STARTS */
 
+/* class="dir-tablist"
+
+height  : 75px
+
+class="directory-people-card-main-div"
+margin-top : -60px */
+
+
 .People-Card-Imgplaceholder {
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -92,6 +100,34 @@
   }
 
   ul.dir-tablist {
+        display: flex;
+    flex-flow: row wrap    
+ //display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 0 60px 0;
+}
+
+ul.dir-tablist li.dir-tab {
+            float: right;
+    flex-basis: 40%;
+    /* width: 100px; */
+    text-align: center;    
+  list-style: none;
+  padding: 8px 16px;
+  color: var(--Green-3, #2d5453);
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: "Bw Beto";
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+
+  /* ul.dir-tablist {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,7 +146,7 @@
     font-weight: 300;
     line-height: 24px;
     cursor: pointer;
-  }
+  } */
 
   li.dir-tab.react-tabs__tab--selected {
     border-radius: 4px 4px 0px 0px;
