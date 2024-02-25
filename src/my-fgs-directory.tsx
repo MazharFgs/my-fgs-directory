@@ -24,7 +24,7 @@ import PeopleDirectoryCard from "./PeopleDirectoryCard";
 // import MultiSelectPosition from "./form-controls/MultiSelectPosition";
 import MulSelect from "./form-controls/MulSelect";
 import HighlightSearch from "./form-controls/HighlightSearch";
-
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 /**
  * React Component
  */
@@ -295,7 +295,9 @@ export const MyFgsDirectory = ({
     if (checkDirectoryAuthToken) {
       let verifyToken = JSON.stringify({
         // userId: info?.externalID,
-        userId: "00uwskbw25UJUbQfl1t7",
+        // userId: "00uwskbw25UJUbQfl1t7",
+        userId: "00uwsermqyJ8TMhIt1t7",
+
         token: checkDirectoryAuthToken,
       });
 
@@ -312,16 +314,13 @@ export const MyFgsDirectory = ({
       axios
         .request(config)
         .then((response) => {
-          //   console.log("suu", response);
           if (response.data.success) {
-            // console.log(JSON.stringify(response.data));
             setIsLoggedIn(true);
           } else {
             authenticateUser(info);
           }
         })
         .catch((error) => {
-          //   console.log("catch", error);
           authenticateUser(info);
         });
     } else {
@@ -332,7 +331,8 @@ export const MyFgsDirectory = ({
   const authenticateUser = (info) => {
     let data = JSON.stringify({
       //   userId: info?.externalID,
-      userId: "00uwskbw25UJUbQfl1t7",
+      //   userId: "00uwskbw25UJUbQfl1t7",
+      userId: "00uwsermqyJ8TMhIt1t7",
     });
 
     let config = {
@@ -387,6 +387,19 @@ export const MyFgsDirectory = ({
   return (
     <>
       <div className="directory-main-div">
+        <div className="header-title">
+          <div className="back-page-div" style={{ padding: 0 }}>
+            <a
+              href="https://my.fgsglobal.com/content/page/65d73c0f2a81f60c054103fa"
+              className="back-page-url"
+            >
+              <ArrowBackIosIcon style={{ height: 10, width: 10 }} />
+              <span>Home</span>
+            </a>
+          </div>
+
+          <div className="directory-page-title-name">Directory</div>
+        </div>
         {!loader ? (
           <Tabs
             className="dir-tabs"
@@ -400,11 +413,11 @@ export const MyFgsDirectory = ({
 
             <TabPanel>
               <div className="directory-people-card-main-div">
-                <div
+                {/* <div
                   className="directory-filter-div"
                   style={{ display: "flex", flexWrap: "wrap" }}
-                >
-                  <div
+                > */}
+                {/* <div
                     className="directory-element-div"
                     style={{ width: "30%", float: "left" }}
                   >
@@ -432,9 +445,9 @@ export const MyFgsDirectory = ({
                         onRemove={onRemove}
                         width={650}
                       />
-                    </div>
+                    </div> */}
 
-                    {/* <MultiselectWithAll
+                {/* <MultiselectWithAll
                       className="directory-multi-select"
                       displayValue="label"
                       options={listPractice}
@@ -447,7 +460,7 @@ export const MyFgsDirectory = ({
                       // singleSelect={true}
                     /> */}
 
-                    {/* <Multiselect
+                {/* <Multiselect
                       className="directory-multi-select"
                       options={list_practies}
                       isObject={false}
@@ -458,7 +471,7 @@ export const MyFgsDirectory = ({
                       onRemove={(e) => setPractice(e)}
                       selectedValues={practice}
                     /> */}
-                  </div>
+                {/* </div>
                   <div
                     className="directory-element-div"
                     style={{ width: "30%", float: "left" }}
@@ -473,18 +486,7 @@ export const MyFgsDirectory = ({
                       />
                     </div>
 
-                    {/* <MultiselectWithAll
-                      className="directory-multi-select"
-                      displayValue="label"
-                      options={listSector}
-                      showCheckbox={true}
-                      hidePlaceholder={true}
-                      closeOnSelect={true}
-                      onSelect={(e: any) => setSelectedSector(e)}
-                      onRemove={(e: any) => setSelectedSector(e)}
-                      selectedValues={selectedSector}
-                      // singleSelect={true}
-                    /> */}
+                    
                   </div>
                   <div
                     className="directory-element-div"
@@ -499,8 +501,8 @@ export const MyFgsDirectory = ({
                         width={575}
                       />
                     </div>
-                  </div>
-                  <div
+                  </div> */}
+                {/* <div
                     className="directory-element-div"
                     style={{ width: "10%", float: "right" }}
                   >
@@ -515,17 +517,8 @@ export const MyFgsDirectory = ({
                     </div>
                   </div>
                 </div>
-                <hr className="directory-border-color" />
+                <hr className="directory-border-color" /> */}
                 <div className="directory-select-seach">
-                  {/* <Select
-                    options={searchFromPeople}
-                    placeholder="Find a person"
-                    value={""}
-                    onChange={handleSelect}
-                    isSearchable={true}
-                    openMenuOnFocus={false}
-                    isMenuOpen={true}
-                  /> */}
                   <HighlightSearch
                     options={searchFromPeople}
                     // options={[

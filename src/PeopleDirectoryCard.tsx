@@ -7,33 +7,33 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
     window.location = view_url;
   };
   return (
-    <a onClick={onclick} href="#">
-      <div className="People-Card-Group-Container">
+    <div className="People-Card-Group-Container">
+      <div
+        className="People-Card"
+        style={{
+          width: "198px",
+          padding: "16px",
+          background: "white",
+          borderRadius: "8px",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+          display: "inline-flex",
+        }}
+      >
         <div
-          className="People-Card"
+          className="People-Card-Container"
           style={{
-            width: "198px",
-            padding: "16px",
-            background: "white",
-            borderRadius: "8px",
+            alignSelf: "stretch",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "center",
-            gap: "20px",
-            display: "inline-flex",
+            gap: "12px",
+            display: "flex",
           }}
         >
-          <div
-            className="People-Card-Container"
-            style={{
-              alignSelf: "stretch",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              gap: "12px",
-              display: "flex",
-            }}
-          >
+          <a onClick={onclick} href="#">
             <div className="People-Card-Imgplaceholder">
               {Object.keys(person?.storyblokData).length === 0 ? (
                 <img
@@ -59,17 +59,19 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                 />
               )}
             </div>
-            <div
-              className="People-Card-Contents"
-              style={{
-                alignSelf: "stretch",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                gap: "10px",
-                display: "flex",
-              }}
-            >
+          </a>
+          <div
+            className="People-Card-Contents"
+            style={{
+              alignSelf: "stretch",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              gap: "10px",
+              display: "flex",
+            }}
+          >
+            <a onClick={onclick} href="#">
               <div
                 className="People-Card-NameDesignation"
                 style={{
@@ -104,10 +106,13 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                     : person?.department}
                 </div>
               </div>
-              <div
-                className="People-Card-ContactDetails"
-                style={{ width: "166px", height: "50px", position: "relative" }}
-              >
+            </a>
+
+            <div
+              className="People-Card-ContactDetails"
+              style={{ width: "166px", height: "50px", position: "relative" }}
+            >
+              <a onClick={onclick} href="#">
                 <div
                   className="People-Card-Number-Detail"
                   style={{
@@ -121,25 +126,30 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                     ? ""
                     : person?.phone[0].value}
                 </div>
-                <div
-                  className="People-Card-Email-Detail"
-                  style={{
-                    width: "166px",
-                    left: "0px",
-                    top: "16px",
-                    wordWrap: "break-word",
-                  }}
-                >
-                  {Object.keys(person.email).length === 0
-                    ? ""
-                    : person?.email[0].value}
-                </div>
-              </div>
+              </a>
+              {Object.keys(person.email).length === 0 ? (
+                ""
+              ) : (
+                <a href={`mailto:${person?.email[0].value}`}>
+                  <div
+                    className="People-Card-Email-Detail"
+                    style={{
+                      width: "166px",
+                      left: "0px",
+                      top: "16px",
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    {" "}
+                    ${person?.email[0].value}
+                  </div>
+                </a>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
 
