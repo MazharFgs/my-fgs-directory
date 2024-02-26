@@ -140,8 +140,7 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                       wordWrap: "break-word",
                     }}
                   >
-                    {" "}
-                    ${person?.email[0].value}
+                    {person?.email[0].value}
                   </div>
                 </a>
               )}

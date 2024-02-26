@@ -32,7 +32,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
   widgetApi: WidgetApi;
 }
 
-const apiUrl = `https://myfgs-staffbase-storyblok-proxy-6nar3kdwr-fgh-global.vercel.app/api/`;
+const apiUrl = `https://myfgs-staffbase-storyblok-proxy-11o8ib9dg-fgh-global.vercel.app/api/`;
 // const view_url = "http://localhost:3006/";
 const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
