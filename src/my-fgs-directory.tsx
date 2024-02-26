@@ -300,9 +300,9 @@ export const MyFgsDirectory = ({
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
       let verifyToken = JSON.stringify({
-        // userId: info?.externalID,
+        userId: info?.externalID,
         // userId: "00uwskbw25UJUbQfl1t7",
-        userId: "00uwsermqyJ8TMhIt1t7",
+        // userId: "00uwsermqyJ8TMhIt1t7",
 
         token: checkDirectoryAuthToken,
       });
@@ -336,9 +336,9 @@ export const MyFgsDirectory = ({
 
   const authenticateUser = (info) => {
     let data = JSON.stringify({
-      //   userId: info?.externalID,
-      //   userId: "00uwskbw25UJUbQfl1t7",
-      userId: "00uwsermqyJ8TMhIt1t7",
+      userId: info?.externalID,
+      // userId: "00uwskbw25UJUbQfl1t7",
+      //   userId: "00uwsermqyJ8TMhIt1t7",
     });
 
     let config = {
