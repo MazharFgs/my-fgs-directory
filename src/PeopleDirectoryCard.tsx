@@ -34,14 +34,14 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
           }}
         >
           <a onClick={onclick} href="#">
-            <div>
+            {/* <div>
               <img
                 src="https://cdn-de1.staffbase.com/eyo-live-de/image/upload/v1708955982/PiCTGomSNVEwu2sfFr4muuH2AMYowOVahtPL20Fl7DOvLhAhcrfTTFDOTd9tSP66GTNggEZB9eJAx7yZeMHfJ3ZWx8dS9lYyTjKZMqlfB8VxIyKCWKTXnYdFULjnFoB4pXzawCPD6M4Rxoz8NkzDnKVQtJyFoiN4YZfMZzSUomFt2nCPn6IQkQUGBxxS280D/Profile-Star-Icon.png"
                 className=""
                 width="32px"
                 height="32px"
               />
-            </div>
+            </div> */}
 
             <div className="People-Card-Imgplaceholder">
               {Object.keys(person?.storyblokData).length === 0 ? (

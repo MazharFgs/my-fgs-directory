@@ -6,13 +6,7 @@ const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
 
 const getFormatedV2 = (label, userInput) => {
-  // highlight searched portion
-  //   const regex = new RegExp(userInput, "gi");
-  //   const highlightedContent = label.replace(regex, (match: string) => (
-  //     <strong className="highlight">${match}</strong>
-  //   ));
-  //   return highlightedContent;
-  //   Highlight letters
+  // Highlight letters
   return label
     ?.split(" ")
     .map((word: string) =>
@@ -35,26 +29,17 @@ const Option = (props) => {
   return (
     <components.Option {...props}>
       <div>
-        {userInput?.length ? (
-          label?.split(" ").length ? (
-            <span
-              dangerouslySetInnerHTML={{
-                __html: getFormatedV2(label, userInput),
-              }}
-            ></span>
-          ) : (
-            label
-          )
-        ) : (
-          label
-        )}
+        {userInput?.length
+          ? label?.split(" ").length
+            ? getFormatedV2(label, userInput)
+            : label
+          : label}
       </div>
     </components.Option>
   );
 };
 
 const HighlightSearch = ({ options }) => {
-  console.log("lit of options", options);
   const filterOption = (option, inputValue) => {
     if (inputValue) {
       const { label, value } = option;
@@ -104,9 +89,6 @@ const HighlightSearch = ({ options }) => {
         onChange={handleSelect}
         filterOption={filterOption}
         components={{ Option }}
-        // onSearch={handleOnSearch}
-        //   onSelect={}
-        // onSelect={handleOnSelect}
       />
     </>
   );
