@@ -8,6 +8,7 @@ import PeopleDirectoryCard from "../PeopleDirectoryCard";
 import { apiUrl, getDirectoryAuthtoken, view_url } from "../constants";
 import axios from "axios";
 import HighlightSearch from "../form-controls/HighlightSearch";
+import BackgroundLoader from "../form-controls/BackgroundLoader";
 
 const CategoryDropDown = () => {
   const subcatref = createRef();
@@ -268,7 +269,7 @@ const CategoryDropDown = () => {
       </div>
       {/* Card Section */}
       {loading ? (
-        <div>loading..</div>
+        <BackgroundLoader />
       ) : (
         <div className="directory-filter-div" style={{ display: "flex" }}>
           {peopleData.map((user: any) => {

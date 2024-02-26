@@ -6,7 +6,13 @@ const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
 
 const getFormatedV2 = (label, userInput) => {
-  // Highlight letters
+  // highlight searched portion
+  //   const regex = new RegExp(userInput, "gi");
+  //   const highlightedContent = label.replace(regex, (match: string) => (
+  //     <strong className="highlight">${match}</strong>
+  //   ));
+  //   return highlightedContent;
+  //   Highlight letters
   return label
     ?.split(" ")
     .map((word: string) =>
@@ -29,17 +35,26 @@ const Option = (props) => {
   return (
     <components.Option {...props}>
       <div>
-        {userInput?.length
-          ? label?.split(" ").length
-            ? getFormatedV2(label, userInput)
-            : label
-          : label}
+        {userInput?.length ? (
+          label?.split(" ").length ? (
+            <span
+              dangerouslySetInnerHTML={{
+                __html: getFormatedV2(label, userInput),
+              }}
+            ></span>
+          ) : (
+            label
+          )
+        ) : (
+          label
+        )}
       </div>
     </components.Option>
   );
 };
 
 const HighlightSearch = ({ options }) => {
+  console.log("lit of options", options);
   const filterOption = (option, inputValue) => {
     if (inputValue) {
       const { label, value } = option;
@@ -55,17 +70,28 @@ const HighlightSearch = ({ options }) => {
   };
 
   function handleSelect(sdata) {
+    console.log("sdata", sdata);
+
+    if (sdata.key !== "Enter") {
+      localStorage.setItem("view_profile_email", sdata.email);
+      window.location = view_url;
+    }
     // console.log("ssss", sdata);
     // return;
-    localStorage.setItem("view_profile_email", sdata.email);
-    window.location = view_url;
+
     //   setSelectedOptions(data);
   }
+  //   function enterKey(e) {
+  //     if (e.key == "Enter") {
+  //       console.log("enter", e);
+  //     }
+  //   }
 
   return (
     <>
       <Select
         options={options}
+        classNamePrefix="hightlight-filter-search"
         // placeholder="Find a person"
         placeholder={
           <>
@@ -73,9 +99,14 @@ const HighlightSearch = ({ options }) => {
             <SearchIcon style={{ float: "right" }} />
           </>
         }
+        noOptionsMessage={() => null}
+        // onKeyDown={enterKey}
         onChange={handleSelect}
         filterOption={filterOption}
         components={{ Option }}
+        // onSearch={handleOnSearch}
+        //   onSelect={}
+        // onSelect={handleOnSelect}
       />
     </>
   );

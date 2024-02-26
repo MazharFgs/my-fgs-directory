@@ -27,6 +27,9 @@ import HighlightSearch from "./form-controls/HighlightSearch";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import CategoryDropDown from "./BusinessDevelopment/CategoryDropDown";
 import { apiUrl } from "./constants";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import BackgroundLoader from "./form-controls/BackgroundLoader";
+import FailuarCard from "./FailuarCard";
 
 /**
  * React Component
@@ -403,6 +406,7 @@ export const MyFgsDirectory = ({
 
           <div className="directory-page-title-name">Directory</div>
         </div>
+        {/* <FailuarCard /> */}
         {!loader ? (
           <Tabs
             className="dir-tabs"
@@ -604,7 +608,7 @@ export const MyFgsDirectory = ({
             </TabPanel>
           </Tabs>
         ) : (
-          "loading ...."
+          <BackgroundLoader />
         )}
       </div>
     </>
