@@ -25,6 +25,9 @@ import PeopleDirectoryCard from "./PeopleDirectoryCard";
 import MulSelect from "./form-controls/MulSelect";
 import HighlightSearch from "./form-controls/HighlightSearch";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import CategoryDropDown from "./BusinessDevelopment/CategoryDropDown";
+import { apiUrl } from "./constants";
+
 /**
  * React Component
  */
@@ -32,7 +35,7 @@ export interface MyFgsDirectoryProps extends BlockAttributes {
   widgetApi: WidgetApi;
 }
 
-const apiUrl = `https://myfgs-staffbase-storyblok-proxy-11o8ib9dg-fgh-global.vercel.app/api/`;
+// const apiUrl = `https://myfgs-staffbase-storyblok-proxy-11o8ib9dg-fgh-global.vercel.app/api/`;
 // const view_url = "http://localhost:3006/";
 const view_url =
   "https://my.fgsglobal.com/content/page/65d2c7a0ff842f089f9ca925";
@@ -576,49 +579,28 @@ export const MyFgsDirectory = ({
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="directory-people-card-main-div">
-                <div
-                  className="directory-filter-div"
-                  style={{ display: "flex", flexWrap: "wrap" }}
-                >
+              {tabIndex === 1 && (
+                <div className="directory-people-card-main-div">
                   <div
-                    className="directory-element-div"
-                    style={{ width: "80%", float: "left" }}
+                    className="directory-filter-div"
+                    style={{ display: "flex", flexWrap: "wrap" }}
                   >
-                    <label className="directory-lable">Category</label>
-                  </div>
-                  <div
-                    className="directory-element-div"
-                    style={{ width: "20%", float: "left" }}
-                  >
-                    <div className="directory-cancel-button">Reset</div>
+                    <div
+                      className="directory-element-div"
+                      style={{ width: "80%", float: "left" }}
+                    >
+                      {/* <label className="directory-lable">Category</label> */}
+                      <CategoryDropDown></CategoryDropDown>
+                    </div>
+                    {/* <div
+                                        className="directory-element-div"
+                                        style={{ width: "20%", float: "left" }}
+                                    >
+                                        <div className="directory-cancel-button">Reset</div>
+                                    </div> */}
                   </div>
                 </div>
-                <hr className="directory-border-color" />
-                <div
-                  className="directory-filter-div"
-                  style={{ display: "flex", flexWrap: "wrap" }}
-                >
-                  <PeopleCard person={user} />
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-
-                  <PeopleCard person={user} />
-                </div>
-              </div>
+              )}
             </TabPanel>
           </Tabs>
         ) : (

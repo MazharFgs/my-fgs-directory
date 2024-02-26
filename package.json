@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.10",
     "@staffbase/widget-sdk": "^3.8.0",
     "axios": "^1.6.7",
