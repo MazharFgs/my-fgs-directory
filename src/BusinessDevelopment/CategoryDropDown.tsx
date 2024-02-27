@@ -9,6 +9,7 @@ import { apiUrl, getDirectoryAuthtoken, view_url } from "../constants";
 import axios from "axios";
 import HighlightSearch from "../form-controls/HighlightSearch";
 import BackgroundLoader from "../form-controls/BackgroundLoader";
+import FailuarCard from "../FailuarCard";
 
 const CategoryDropDown = () => {
   const subcatref = createRef();
@@ -24,7 +25,8 @@ const CategoryDropDown = () => {
   const [locationDrpDwn, setlocationDrpDwn] = useState<any>([]);
 
   const [showLocationDropDown, setShowLocationDropDown] = useState<any>(false);
-  const [loading, setLoading] = useState<any>(true);
+  const [loading, setLoading] = useState<any>(false);
+  const [loadingCategory, setLoadingCategory] = useState<any>(false);
 
   const searchFromPeople = peopleData.map((searchData: any) => {
     return {
@@ -48,7 +50,7 @@ const CategoryDropDown = () => {
       .request(config)
       .then((response) => {
         setCategoryDrpDwn(response?.data?.data);
-        setLoading(false);
+        setLoading(true);
       })
       .catch((error) => {
         let errr = error;
@@ -70,13 +72,13 @@ const CategoryDropDown = () => {
     axios
       .request(config)
       .then((response) => {
+        setLoadingCategory(true);
         setPeopleData(response?.data?.data);
         setInitialPeopleData(response?.data?.data);
-        setLoading(false);
       })
       .catch((error: any) => {
         console.log(error);
-        setLoading(false);
+        // setLoading(false);
       });
   };
 
@@ -99,7 +101,7 @@ const CategoryDropDown = () => {
   }, [selectedCategory, seletedSubCategry, showLocationDropDown]);
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
-    setLoading(true);
+    // setLoading(true);
     setseletedSubCategry("");
     setselectedCategory(event.target.value);
 
@@ -115,16 +117,8 @@ const CategoryDropDown = () => {
       );
     });
 
-    // let refda = subcatref;
-
-    // if (seletedSubCategry !== "") {
-    //     peoplefilterbyCategry = initialPeopleData.filter((e: any) => {
-    //         return e.storyblokResolves.global_business_domain_titl === event.target.value && e.storyblokResolves?.global_business_directory?.filter((e: any) => { return e.subCategory === seletedSubCategry }).length > 0
-    //     })
-    // }
-
     setPeopleData(peoplefilterbyCategry);
-    setLoading(false);
+    // setLoading(false);
   };
   const handleSubCategoryChange = (event: SelectChangeEvent) => {
     setseletedSubCategry(event.target.value);
@@ -162,11 +156,16 @@ const CategoryDropDown = () => {
     setselectedCategory("");
     setseletedSubCategry("");
   };
+  console.log("peopleData", peopleData);
+  console.log("peopleData lenght", peopleData.length);
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "row", columnGap: 32 }}>
-        <div>
+      <div
+        className="knowledge-category-main-div"
+        style={{ display: "flex", flexDirection: "row", columnGap: 32 }}
+      >
+        <div className="knowledge-category-div">
           <FormControl variant="standard" sx={{ m: 1, minWidth: 250 }}>
             <InputLabel id="demo-simple-select-standard-label">
               Category
@@ -185,7 +184,7 @@ const CategoryDropDown = () => {
             </Select>
           </FormControl>
         </div>
-        <div>
+        <div className="knowledge-category-div">
           {selectedCategory && (
             <FormControl variant="standard" sx={{ m: 1, minWidth: 250 }}>
               <InputLabel id="demo-simple-select-standard-label">
@@ -255,32 +254,42 @@ const CategoryDropDown = () => {
       </div>
       <hr className="directory-border-color" />
       <div
+        className="highlight-search-directory-main-div"
         style={{
           display: "flex",
           justifyContent: "end",
           alignItems: "end",
-          width: 200,
+          width: 500,
         }}
       >
-        <HighlightSearch
-          options={searchFromPeople}
-          style={{ width: 250 }}
-        ></HighlightSearch>
+        <div
+          className="highlight-search-directory-div"
+          style={{ width: "80%" }}
+        >
+          <HighlightSearch
+            options={searchFromPeople}
+            // style={{ width: 250 }}
+          />
+        </div>
       </div>
       {/* Card Section */}
-      {loading ? (
-        <BackgroundLoader />
-      ) : (
+      {loading & loadingCategory ? (
         <div className="directory-filter-div" style={{ display: "flex" }}>
-          {peopleData.map((user: any) => {
-            return (
-              <PeopleDirectoryCard
-                person={user}
-                view_url={view_url}
-              ></PeopleDirectoryCard>
-            );
-          })}
+          {peopleData.length > 0 ? (
+            peopleData.map((user: any) => {
+              return (
+                <PeopleDirectoryCard
+                  person={user}
+                  view_url={view_url}
+                ></PeopleDirectoryCard>
+              );
+            })
+          ) : (
+            <FailuarCard />
+          )}
         </div>
+      ) : (
+        <BackgroundLoader />
       )}
     </>
   );

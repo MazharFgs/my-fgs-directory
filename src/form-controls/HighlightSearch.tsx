@@ -40,6 +40,7 @@ const Option = (props) => {
 };
 
 const HighlightSearch = ({ options }) => {
+  console.log("options all", options);
   const filterOption = (option, inputValue) => {
     if (inputValue) {
       const { label, value } = option;
@@ -80,7 +81,7 @@ const HighlightSearch = ({ options }) => {
         // placeholder="Find a person"
         placeholder={
           <>
-            <label>Find a person</label>
+            <label style={{ float: "left" }}>Type a name</label>
             <SearchIcon style={{ float: "right" }} />
           </>
         }

@@ -30,6 +30,7 @@ import { apiUrl } from "./constants";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import BackgroundLoader from "./form-controls/BackgroundLoader";
 import FailuarCard from "./FailuarCard";
+import SelectWithSearch from "./form-controls/SelectWithSearch";
 
 /**
  * React Component
@@ -56,8 +57,8 @@ export const MyFgsDirectory = ({
 
   const searchFromPeople = searchPeopleData.map((searchData) => {
     return {
-      label: searchData.firstName,
-      value: searchData.firstName,
+      label: searchData.firstName + " " + searchData.lastName,
+      value: searchData.firstName + " " + searchData.lastName,
       email: searchData.email[0].value,
     };
   });
@@ -300,9 +301,9 @@ export const MyFgsDirectory = ({
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
     if (checkDirectoryAuthToken) {
       let verifyToken = JSON.stringify({
-        userId: info?.externalID,
+        // userId: info?.externalID,
         // userId: "00uwskbw25UJUbQfl1t7",
-        // userId: "00uwsermqyJ8TMhIt1t7",
+        userId: "00uwsermqyJ8TMhIt1t7",
 
         token: checkDirectoryAuthToken,
       });
@@ -336,9 +337,9 @@ export const MyFgsDirectory = ({
 
   const authenticateUser = (info) => {
     let data = JSON.stringify({
-      userId: info?.externalID,
+      //   userId: info?.externalID,
       //   userId: "00uwskbw25UJUbQfl1t7",
-      //   userId: "00uwsermqyJ8TMhIt1t7",
+      userId: "00uwsermqyJ8TMhIt1t7",
     });
 
     let config = {
@@ -373,7 +374,10 @@ export const MyFgsDirectory = ({
     setSearchPeopleData(peopleData);
     setonRemove(!onRemove);
   };
-
+  //   const selectedSearchUser = (sdata) => {
+  //     console.log(sdata[0].value);
+  //     window.location.href = `${view_url}email=${sdata[0].value}`;
+  //   };
   //   const selectedSearchUser = (sdata) => {
   //     //   e.preventDefault();
   //     localStorage.setItem("view_profile_email", sdata[0].value);
@@ -415,11 +419,29 @@ export const MyFgsDirectory = ({
           >
             <TabList className="dir-tablist">
               <Tab className="dir-tab">People</Tab>
-              <Tab className="dir-tab">Business Directory</Tab>
+              <Tab className="dir-tab">Knowledge</Tab>
             </TabList>
 
             <TabPanel>
               <div className="directory-people-card-main-div">
+                {/* <SelectWithSearch
+                  displayValue="label"
+                  onKeyPressFn={function noRefCheck() {}}
+                  onRemove={function noRefCheck() {}}
+                  onSearch={function noRefCheck() {}}
+                  onSelect={(e: any) => {
+                    selectedSearchUser(e);
+                  }}
+                  // options={[
+                  //   "Sarath Kumar",
+                  //   "Narmadha",
+                  //   "Uthra",
+                  //   "Sathick basha",
+                  //   "Furkan",
+                  // ]}
+                  options={searchFromPeople}
+                  placeholder="Find a person"
+                /> */}
                 {/* <div
                   className="directory-filter-div"
                   style={{ display: "flex", flexWrap: "wrap" }}
@@ -525,45 +547,66 @@ export const MyFgsDirectory = ({
                   </div>
                 </div>
                 <hr className="directory-border-color" /> */}
-                <div className="directory-select-seach">
-                  <HighlightSearch
-                    options={searchFromPeople}
-                    // options={[
-                    //   {
-                    //     label: "Satyanarayana",
-                    //     value: "Satyanarayana",
-                    //     email: "satyanarayana.pulipaka@wipro.com",
-                    //   },
-                    //   {
-                    //     label: "Satyanarayana",
-                    //     value: "Satyanarayana",
-                    //     email: "satyanarayana.pulipaka_extern@fgsglobal.com",
-                    //   },
-                    //   {
-                    //     label: "S",
-                    //     value: "S",
-                    //     email: "shantanu.singh_extern@fgsglobal.com",
-                    //   },
-                    // ]}
+                <div
+                  className="directory-search-main-div"
+                  style={{ display: "flex", flexWrap: "wrap" }}
+                >
+                  <div
+                    className="directory-select-seach"
+                    style={{ width: "70%", textAlign: "center" }}
+                  >
+                    <div
+                      className="directory-lable-search-hightlight"
+                      style={{ width: "100%" }}
+                    >
+                      <label style={{ float: "left" }}>Find a Person</label>
+                    </div>
+                    <br />
 
-                    // options={[
-                    //   { value: "Spring", label: "Spring" },
-                    //   { value: "Summer", label: "Summer" },
-                    //   { value: "Autumn", label: "Autumn" },
-                    //   { value: "Winter", label: "Winter" },
-                    //   { value: "Rain", label: "Rain" },
-                    //   { value: "Fog", label: "Fog" },
-                    //   { value: "Thunderstrom", label: "Thunderstrom" },
-                    //   { value: "Flood", label: "Flood" },
-                    //   { value: "Blue", label: "Blue" },
-                    //   { value: "Green", label: "Green" },
-                    //   { value: "Orange", label: "Orange" },
-                    //   { value: "Watermelon", label: "Watermelon" },
-                    //   { value: "Banana", label: "Banana" },
-                    //   { value: "Apple", label: "Apple" },
-                    //   { value: "Mango", label: "Mango" },
-                    // ]}
-                  />
+                    <div
+                      className="highlight-search-div"
+                      style={{ width: "80%" }}
+                    >
+                      <HighlightSearch
+                        options={searchFromPeople}
+                        // options={[
+                        //   {
+                        //     label: "Satyanarayana",
+                        //     value: "Satyanarayana",
+                        //     email: "satyanarayana.pulipaka@wipro.com",
+                        //   },
+                        //   {
+                        //     label: "Satyanarayana",
+                        //     value: "Satyanarayana",
+                        //     email: "satyanarayana.pulipaka_extern@fgsglobal.com",
+                        //   },
+                        //   {
+                        //     label: "S",
+                        //     value: "S",
+                        //     email: "shantanu.singh_extern@fgsglobal.com",
+                        //   },
+                        // ]}
+
+                        // options={[
+                        //   { value: "Spring", label: "Spring" },
+                        //   { value: "Summer", label: "Summer" },
+                        //   { value: "Autumn", label: "Autumn" },
+                        //   { value: "Winter", label: "Winter" },
+                        //   { value: "Rain", label: "Rain" },
+                        //   { value: "Fog", label: "Fog" },
+                        //   { value: "Thunderstrom", label: "Thunderstrom" },
+                        //   { value: "Flood", label: "Flood" },
+                        //   { value: "Blue", label: "Blue" },
+                        //   { value: "Green", label: "Green" },
+                        //   { value: "Orange", label: "Orange" },
+                        //   { value: "Watermelon", label: "Watermelon" },
+                        //   { value: "Banana", label: "Banana" },
+                        //   { value: "Apple", label: "Apple" },
+                        //   { value: "Mango", label: "Mango" },
+                        // ]}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div

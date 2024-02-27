@@ -34,18 +34,24 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
           }}
         >
           <a onClick={onclick} href="#">
-            {/* <div>
-              <img
-                src="https://cdn-de1.staffbase.com/eyo-live-de/image/upload/v1708955982/PiCTGomSNVEwu2sfFr4muuH2AMYowOVahtPL20Fl7DOvLhAhcrfTTFDOTd9tSP66GTNggEZB9eJAx7yZeMHfJ3ZWx8dS9lYyTjKZMqlfB8VxIyKCWKTXnYdFULjnFoB4pXzawCPD6M4Rxoz8NkzDnKVQtJyFoiN4YZfMZzSUomFt2nCPn6IQkQUGBxxS280D/Profile-Star-Icon.png"
-                className=""
-                width="32px"
-                height="32px"
-              />
-            </div> */}
+            <div
+              className="People-Card-Imgplaceholder"
+              style={{ position: "relative" }}
+            >
+              {person?.storyblokData?.starFlag && (
+                <div style={{ position: "absolute", top: "-6px", left: 135 }}>
+                  <img
+                    src="https://cdn-de1.staffbase.com/eyo-live-de/image/upload/v1708955982/PiCTGomSNVEwu2sfFr4muuH2AMYowOVahtPL20Fl7DOvLhAhcrfTTFDOTd9tSP66GTNggEZB9eJAx7yZeMHfJ3ZWx8dS9lYyTjKZMqlfB8VxIyKCWKTXnYdFULjnFoB4pXzawCPD6M4Rxoz8NkzDnKVQtJyFoiN4YZfMZzSUomFt2nCPn6IQkQUGBxxS280D/Profile-Star-Icon.png"
+                    className="People-Card-Imgplaceholder-icon"
+                    width="32px"
+                    height="32px"
+                  />
+                </div>
+              )}
 
-            <div className="People-Card-Imgplaceholder">
               {Object.keys(person?.storyblokData).length === 0 ? (
                 <img
+                  className="People-Card-Imgplaceholder-image"
                   src={
                     "https://cdn-de1.staffbase.com/eyo-live-de/image/upload/w_166,h_237/c_limit,w_2000,h_2000/v1706792579/OUEOcGLz7i4q2k6tYK6OoNaTKHZrPrL0tARdTSMzo6Q8IAt2JkDsEG10i3g2TC52fsfFW3uRqzVAEWsCJmIS7MvDoF0JVNu5lepOFphe5ZyIWzI9WWR9ysgapfnUxE2tmfYR8Ab10OpReGxtm0Pd4gdTFfGyxzuEv3d2oBFNKWxjqs1bsFBF0VhDpqQdfmTP/Card-ImgPeople.png"
                   }
@@ -54,6 +60,7 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                 />
               ) : Object.keys(person?.storyblokData?.image).length === 0 ? (
                 <img
+                  className="People-Card-Imgplaceholder-image"
                   src={
                     "https://cdn-de1.staffbase.com/eyo-live-de/image/upload/w_166,h_237/c_limit,w_2000,h_2000/v1706792579/OUEOcGLz7i4q2k6tYK6OoNaTKHZrPrL0tARdTSMzo6Q8IAt2JkDsEG10i3g2TC52fsfFW3uRqzVAEWsCJmIS7MvDoF0JVNu5lepOFphe5ZyIWzI9WWR9ysgapfnUxE2tmfYR8Ab10OpReGxtm0Pd4gdTFfGyxzuEv3d2oBFNKWxjqs1bsFBF0VhDpqQdfmTP/Card-ImgPeople.png"
                   }
@@ -62,6 +69,7 @@ const PeopleDirectoryCard = ({ person, view_url }) => {
                 />
               ) : (
                 <img
+                  className="People-Card-Imgplaceholder-image"
                   src={person?.storyblokData?.image.filename}
                   height="237"
                   width="166"
