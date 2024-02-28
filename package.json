@@ -18,7 +18,10 @@
   "license": "ISC",
   "dependencies": {
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.10",
+    "@types/autosuggest-highlight": "latest",
+    "autosuggest-highlight": "latest",
     "@staffbase/widget-sdk": "^3.8.0",
     "axios": "^1.6.7",
     "multiselect-react-dropdown": "^2.0.25",

@@ -31,7 +31,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import BackgroundLoader from "./form-controls/BackgroundLoader";
 import FailuarCard from "./FailuarCard";
 import SelectWithSearch from "./form-controls/SelectWithSearch";
-
+import HightlightInput from "./form-controls/HightlightInput";
 /**
  * React Component
  */
@@ -55,10 +55,10 @@ export const MyFgsDirectory = ({
   const [peopleData, setPeopleData] = useState([]);
   const [searchPeopleData, setSearchPeopleData] = useState([]);
 
-  const searchFromPeople = searchPeopleData.map((searchData) => {
+  const searchFromPeople = peopleData.map((searchData) => {
     return {
-      label: searchData.firstName + " " + searchData.lastName,
-      value: searchData.firstName + " " + searchData.lastName,
+      label: searchData?.firstName + " " + searchData?.lastName,
+      value: searchData?.firstName + " " + searchData?.lastName,
       email: searchData.email[0].value,
     };
   });
@@ -76,6 +76,7 @@ export const MyFgsDirectory = ({
   const [selectedCapability, setSelectedCapability] = useState([]);
   const [onRemove, setonRemove] = useState(false);
 
+  const [selectedSearch, setSelectedSearch] = useState([]);
   useEffect(() => {
     widgetApi.getUserInformation().then((user) => {
       setUser(user);
@@ -198,6 +199,18 @@ export const MyFgsDirectory = ({
     selectedCapability,
     selectedSector,
   ]);
+
+  useEffect(() => {
+    let newArray = peopleData.filter((rec) => {
+      let nameStr = rec?.firstName + " " + rec?.lastName;
+
+      console.log("rec?.firstName", nameStr);
+      if (nameStr.toLowerCase().includes(selectedSearch.toLowerCase())) {
+        return rec;
+      }
+    });
+    setSearchPeopleData([...newArray]);
+  }, [selectedSearch]);
 
   const fetchPeopleCategory = () => {
     const checkDirectoryAuthToken = localStorage.getItem("directoryAuthToken");
@@ -561,14 +574,19 @@ export const MyFgsDirectory = ({
                     >
                       <label style={{ float: "left" }}>Find a Person</label>
                     </div>
-                    <br />
 
                     <div
                       className="highlight-search-div"
                       style={{ width: "80%" }}
                     >
-                      <HighlightSearch
+                      <HightlightInput
+                        listOptions={searchFromPeople}
+                        onSelectSearch={(e: any) => setSelectedSearch(e)}
+                      />
+                      {/* <HighlightSearch
                         options={searchFromPeople}
+                        onSelectSearch={(e: any) => setSelectedSearch(e)}
+
                         // options={[
                         //   {
                         //     label: "Satyanarayana",
@@ -604,7 +622,7 @@ export const MyFgsDirectory = ({
                         //   { value: "Apple", label: "Apple" },
                         //   { value: "Mango", label: "Mango" },
                         // ]}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -613,7 +631,7 @@ export const MyFgsDirectory = ({
                   className="directory-filter-div"
                   style={{ display: "flex", flexWrap: "wrap" }}
                 >
-                  {searchPeopleData &&
+                  {searchPeopleData.length > 0 ? (
                     searchPeopleData.map((user) => {
                       return (
                         <PeopleDirectoryCard
@@ -621,7 +639,12 @@ export const MyFgsDirectory = ({
                           view_url={view_url}
                         />
                       );
-                    })}
+                    })
+                  ) : (
+                    <div className="failuar-card-people">
+                      <FailuarCard />
+                    </div>
+                  )}
                 </div>
               </div>
             </TabPanel>

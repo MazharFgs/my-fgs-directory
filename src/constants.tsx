@@ -1,4 +1,4 @@
-export const apiUrl = `https://myfgs-staffbase-storyblok-proxy-11o8ib9dg-fgh-global.vercel.app/api/`;
+export const apiUrl = `https://myfgs-staffbase-storyblok-proxy-btg6wh5qh-fgh-global.vercel.app/api/`;
 // export const apiUrl = `http://localhost:5000/api/`;
 
 export const getDirectoryAuthtoken = () => {

@@ -10,6 +10,7 @@ import axios from "axios";
 import HighlightSearch from "../form-controls/HighlightSearch";
 import BackgroundLoader from "../form-controls/BackgroundLoader";
 import FailuarCard from "../FailuarCard";
+import HightlightInput from "../form-controls/HightlightInput";
 
 const CategoryDropDown = () => {
   const subcatref = createRef();
@@ -19,6 +20,7 @@ const CategoryDropDown = () => {
 
   const [peopleData, setPeopleData] = useState<any>([]);
   const [initialPeopleData, setInitialPeopleData] = useState<any>([]);
+  const [searchPeopleData, setSearchPeopleData] = useState<any>([]);
 
   const [categoryDrpDwn, setCategoryDrpDwn] = useState<any>([]);
   const [subCategryDrpDwn, setSubCategryDrpDwn] = useState<any>([]);
@@ -27,11 +29,12 @@ const CategoryDropDown = () => {
   const [showLocationDropDown, setShowLocationDropDown] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [loadingCategory, setLoadingCategory] = useState<any>(false);
+  const [selectedSearch, setSelectedSearch] = useState([]);
 
   const searchFromPeople = peopleData.map((searchData: any) => {
     return {
-      label: searchData.firstName,
-      value: searchData.firstName,
+      label: searchData.firstName + " " + searchData.lastName,
+      value: searchData.firstName + " " + searchData.lastName,
       email: searchData.email[0].value,
     };
   });
@@ -159,6 +162,20 @@ const CategoryDropDown = () => {
   console.log("peopleData", peopleData);
   console.log("peopleData lenght", peopleData.length);
 
+  useEffect(() => {
+    console.log("useeffect", selectedSearch);
+    let newArray = peopleData.filter((rec) => {
+      let nameStr = rec?.firstName + " " + rec?.lastName;
+
+      console.log("rec?.firstName", nameStr);
+      if (nameStr.toLowerCase().includes(selectedSearch.toLowerCase())) {
+        return rec;
+      }
+    });
+
+    setSearchPeopleData([...newArray]);
+  }, [selectedSearch]);
+
   return (
     <>
       <div
@@ -225,9 +242,6 @@ const CategoryDropDown = () => {
                 onChange={handleSelectedLocation}
                 label="Location"
                 disabled={peopleData?.data?.length === 0}
-
-                // defaultValue={subCategryDrpDwn && subCategryDrpDwn[0]?.value.map((e: any) => { return e.name })[0]}
-                // defaultChecked={true}
               >
                 {peopleData?.map((e: any) => {
                   return e.storyblokData.location.map((e: any) => {
@@ -252,7 +266,6 @@ const CategoryDropDown = () => {
           </div>
         </div>
       </div>
-      <hr className="directory-border-color" />
       <div
         className="highlight-search-directory-main-div"
         style={{
@@ -266,16 +279,41 @@ const CategoryDropDown = () => {
           className="highlight-search-directory-div"
           style={{ width: "80%" }}
         >
-          <HighlightSearch
-            options={searchFromPeople}
-            // style={{ width: 250 }}
+          <HightlightInput
+            listOptions={searchFromPeople}
+            onSelectSearch={(e: any) => setSelectedSearch(e)}
           />
         </div>
       </div>
       {/* Card Section */}
       {loading & loadingCategory ? (
         <div className="directory-filter-div" style={{ display: "flex" }}>
-          {peopleData.length > 0 ? (
+          {/* {cardList} */}
+          {selectedSearch.length == 0 && peopleData.length > 0 ? (
+            peopleData.map((user: any) => {
+              return (
+                <PeopleDirectoryCard
+                  person={user}
+                  view_url={view_url}
+                ></PeopleDirectoryCard>
+              );
+            })
+          ) : selectedSearch.length > 0 && searchPeopleData.length > 0 ? (
+            searchPeopleData.map((user: any) => {
+              return (
+                <PeopleDirectoryCard
+                  person={user}
+                  view_url={view_url}
+                ></PeopleDirectoryCard>
+              );
+            })
+          ) : (
+            <div className="failur-div-business">
+              <FailuarCard />
+            </div>
+          )}
+
+          {/* {peopleData.length > 0 ? (
             peopleData.map((user: any) => {
               return (
                 <PeopleDirectoryCard
@@ -286,7 +324,7 @@ const CategoryDropDown = () => {
             })
           ) : (
             <FailuarCard />
-          )}
+          )} */}
         </div>
       ) : (
         <BackgroundLoader />
